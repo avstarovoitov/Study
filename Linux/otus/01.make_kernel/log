@@ -1,0 +1,27 @@
+Первым делом выделяем vm 4 vCPU
+0.  sudo su
+1.  yum install wget
+2.  wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.0.tar.xz
+3.  mkdir /usr/src/linux
+4.  tar xf linux-5.0.tar.xz -C /usr/src/linux
+5.  cd /usr/src/linux/linux-5.0/
+6.  cp /boot/config-3.10.0-957.5.1.el7.x86_64 config-centos
+7.  make menuconfig # fail
+8.  yum install gcc
+9.  make menuconfig # fail
+10. yum install ncurses ncurses-devel libncurses-dev
+11. make menuconfig # fail
+12. yum install flex
+13. make menuconfig # fail
+14. yum install bison
+15. make menuconfig # загружаем конфиг config-centos, сохраняем конфиг config-5.0
+16. make -j5 && make -j5 modules_install # fail
+17. yum install  libelf-dev libelf-devel  elfutils-libelf-devel openssl-devel
+18. make -j5 && make -j5 modules_install # fail
+19. yum install bc 
+20. make -j5 && make -j5 modules_install #fail
+21. yum install perl
+22. make -j5 && make -j5 modules_install
+23. make install
+24. grub2-mkconfig -o /etc/grub2.cfg
+25. reboot

@@ -1,0 +1,99 @@
+0. sudo su
+
+1. # lsblk								# Смотрим диски и точки монтирования
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   40G  0 disk 
+└─sda1   8:1    0   40G  0 part /
+sdb      8:16   0  250M  0 disk 
+sdc      8:32   0  250M  0 disk 
+sdd      8:48   0  250M  0 disk 
+sde      8:64   0  250M  0 disk 
+
+2. # mdadm --zero-superblock  /dev/sd{b,c,d,e}				# Очищаем суперблоки
+mdadm: Unrecognised md component device - /dev/sdb			# ошибка означает, что супер блок и так пустой и на дисках нет RAID
+mdadm: Unrecognised md component device - /dev/sdc
+mdadm: Unrecognised md component device - /dev/sdd
+mdadm: Unrecognised md component device - /dev/sde
+
+3. # mdadm --create --verbose /dev/md0 -l 10 -n 4 /dev/sd{b,c,d,e}	# Собираем RAID-10
+mdadm: layout defaults to n2
+mdadm: layout defaults to n2
+mdadm: chunk size defaults to 512K
+mdadm: size set to 253952K
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md0 started.
+
+4. # lsblk								# Проверяем диски
+NAME   MAJ:MIN RM  SIZE RO TYPE   MOUNTPOINT
+sda      8:0    0   40G  0 disk   
+└─sda1   8:1    0   40G  0 part   /
+sdb      8:16   0  250M  0 disk   
+└─md0    9:0    0  496M  0 raid10 
+sdc      8:32   0  250M  0 disk   
+└─md0    9:0    0  496M  0 raid10 
+sdd      8:48   0  250M  0 disk   
+└─md0    9:0    0  496M  0 raid10 
+sde      8:64   0  250M  0 disk   
+└─md0    9:0    0  496M  0 raid10 
+
+5. # cat /proc/mdstat							# Проверяем RAID
+Personalities : [raid6] [raid5] [raid4] [raid10] 
+md0 : active raid10 sde[3] sdd[2] sdc[1] sdb[0]
+      507904 blocks super 1.2 512K chunks 2 near-copies [4/4] [UUUU]
+      
+unused devices: <none>
+
+6. # mdadm -D /dev/md0							# Смотрим информацию о RAID
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Mar  9 14:23:45 2019
+        Raid Level : raid10
+        Array Size : 507904 (496.00 MiB 520.09 MB)
+     Used Dev Size : 253952 (248.00 MiB 260.05 MB)
+      Raid Devices : 4
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sat Mar  9 14:23:48 2019
+             State : clean 
+    Active Devices : 4
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 0
+
+            Layout : near=2
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : otuslinux:0  (local to host otuslinux)
+              UUID : e0a02a19:86a7d96f:7b690796:776f6c51
+            Events : 17
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync set-A   /dev/sdb
+       1       8       32        1      active sync set-B   /dev/sdc
+       2       8       48        2      active sync set-A   /dev/sdd
+       3       8       64        3      active sync set-B   /dev/sde
+
+
+# 7.  # mkdir /etc/mdadm
+8.  # echo "DEVICE partitions" > /etc/mdadm.conf			# Создаём файл с конфигурацией RAID
+9.  # mdadm --detail --scan --verbose | awk '/ARRAY/ {print}' >> /etc/mdadm.conf
+10. # mdadm /dev/md0 --fail /dev/sdb					# Помечаем диск sdb сбойным
+11. # mdadm /dev/md0 --remove /dev/sdb					# Удаляем диск из RAID
+mdadm: hot removed /dev/sdb from /dev/md0
+
+12. # mdadm /dev/md0 --add /dev/sdb					# Добавляем диск в RAID
+mdadm: added /dev/sdb
+
+13. # parted -s /dev/md0 mklabel gpt					# Создаём таблицу разделов GPT
+14. # parted /dev/md0 mkpart primary ext4 0% 20%			# Нарезаем разделы
+15. # parted /dev/md0 mkpart primary ext4 20% 40%
+16. # parted /dev/md0 mkpart primary ext4 40% 60%
+17. # parted /dev/md0 mkpart primary ext4 60% 80%
+18. # parted /dev/md0 mkpart primary ext4 80% 100%
+19. # for i in $(seq 1 5); do sudo mkfs.ext4 /dev/md0p$i; done		# Форматируем разделы
+20. # mkdir -p /raid/part{1,2,3,4,5}					# Создаём точки монтирования
+21. # for i in $(seq 1 5); do mount /dev/md0p$i /raid/part$i; done	# Монтируем разделы
+
