@@ -1,0 +1,24 @@
+[root@Box vagrant]# cp /usr/lib/systemd/system/httpd.service /usr/lib/systemd/system/httpd@.service
+[root@Box vagrant]# vim /usr/lib/systemd/system/httpd@.service
+EnvironmentFile=/etc/sysconfig/httpd-%I
+[root@Box vagrant]# 
+[root@Box vagrant]# 
+[root@Box vagrant]# cat >> /etc/sysconfig/httpd-first <<EOF
+> OPTIONS=-f conf/first.conf
+> EOF
+[root@Box vagrant]# cat >> /etc/sysconfig/httpd-second <<EOF
+OPTIONS=-f conf/second.conf
+EOF
+[root@Box vagrant]# 
+[root@Box vagrant]# cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/first.conf
+[root@Box vagrant]# cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/second.conf
+[root@Box vagrant]#
+[root@Box vagrant]#vim /etc/httpd/conf/first.conf
+PidFile /var/run/httpd-first.pid
+[root@Box vagrant]#vim /etc/httpd/conf/second.conf
+PidFile /var/run/httpd-second.pid
+Listen 8080
+[root@Box vagrant]#
+[root@Box vagrant]# systemctl start httpd@first
+[root@Box vagrant]# systemctl start httpd@second
+

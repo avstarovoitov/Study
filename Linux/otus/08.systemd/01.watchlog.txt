@@ -1,0 +1,81 @@
+[vagrant@Box ~]$ sudo su
+[root@Box vagrant]# 
+[root@Box vagrant]# cat >> /etc/sysconfig/watchlog << EOF
+> # Configuration file for my watchdog service
+> # Place it to /etc/sysconfig
+> # File and word in that file that we will be monit
+> WORD="ALERT"
+> LOG=/var/log/watchlog.log
+> EOF
+[root@Box vagrant]# 
+[root@Box vagrant]# cat >> /var/log/watchlog.log << EOF
+> ALERT: Access Denied from 127.0.0.1
+> EOF
+[root@Box vagrant]# 
+[root@Box vagrant]# vim /opt/watchlog.sh
+#!/bin/bash
+
+WORD=$1
+LOG=$2
+DATE=`date`
+
+if grep $WORD $LOG &> /dev/null
+then
+  logger "$DATE: I found word, Master!"
+else
+  exit 0
+fi
+
+[root@Box vagrant]# chmod +x /opt/watchlog.sh
+[root@Box vagrant]#
+[root@Box vagrant]# vim /etc/systemd/system/watchlog.service
+[Unit]
+Description=My watchlog service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/sysconfig/watchlog
+ExecStart=/opt/watchlog.sh $WORD $LOG
+[root@Box vagrant]#
+[root@Box vagrant]# vim /etc/systemd/system/watchlog.timer
+[Unit]
+Description=Run watchlog script every 30 second
+
+[Timer]
+# Run every 30 second
+OnUnitActiveSec=30
+Unit=watchlog.service
+
+[Install]
+WantedBy=multi-user.target
+[root@Box vagrant]#
+[root@Box vagrant]# systemctl start watchlog.timer
+[root@Box vagrant]# systemctl status watchlog.timer
+● watchlog.timer - Run watchlog script every 30 second
+   Loaded: loaded (/etc/systemd/system/watchlog.timer; disabled; vendor preset: disabled)
+   Active: active (elapsed) since Thu 2019-04-11 12:51:10 UTC; 6s ago
+
+Apr 11 12:51:10 Box systemd[1]: Started Run watchlog script every 30 second.
+Apr 11 12:51:10 Box systemd[1]: Starting Run watchlog script every 30 second.
+[root@Box vagrant]#
+[root@Box vagrant]# systemctl enable watchlog.timer
+Created symlink from /etc/systemd/system/multi-user.target.wants/watchlog.timer to /etc/systemd/system/watchlog.timer.
+[root@Box vagrant]#
+[root@Box vagrant]# systemctl start watchlog.service
+[root@Box vagrant]# systemctl status watchlog.service
+● watchlog.service - My watchlog service
+   Loaded: loaded (/etc/systemd/system/watchlog.service; static; vendor preset: disabled)
+   Active: inactive (dead) since Thu 2019-04-11 13:02:17 UTC; 1s ago
+  Process: 3967 ExecStart=/opt/watchlog.sh $WORD $LOG (code=exited, status=0/SUCCESS)
+ Main PID: 3967 (code=exited, status=0/SUCCESS)
+
+Apr 11 13:02:17 Box systemd[1]: Starting My watchlog service...
+Apr 11 13:02:17 Box systemd[1]: Started My watchlog service.
+[root@Box vagrant]# tail -f /var/log/messages
+Apr 11 13:03:02 localhost systemd: Starting My watchlog service...
+Apr 11 13:03:02 localhost root: Thu Apr 11 13:03:02 UTC 2019: I found word, Master!
+Apr 11 13:03:02 localhost systemd: Started My watchlog service.
+Apr 11 13:03:52 localhost systemd: Starting My watchlog service...
+Apr 11 13:03:52 localhost root: Thu Apr 11 13:03:52 UTC 2019: I found word, Master!
+Apr 11 13:03:52 localhost systemd: Started My watchlog service.
+
