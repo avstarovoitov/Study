@@ -1,7 +1,5 @@
 # -*- mode: ruby -*-
 # vim: set ft=ruby :
-home = ENV['HOME']
-ENV["LC_ALL"] = "en_US.UTF-8"
 
 MACHINES = {
   :Box => {
@@ -13,7 +11,6 @@ MACHINES = {
 
 Vagrant.configure("2") do |config|
 
-    config.vm.box_version = "1804.02"
     MACHINES.each do |boxname, boxconfig|
   
         config.vm.define boxname do |box|
@@ -24,13 +21,20 @@ Vagrant.configure("2") do |config|
             box.vm.provider :virtualbox do |vb|
                     vb.customize ["modifyvm", :id, "--memory", "256"]
                     needsController = false
+                end    
+        config.vm.provision "file", source: "01.watchlog.sh", destination: "~/01.watchlog.sh"
+        config.vm.provision "file", source: "02.spawn-fcgi.sh", destination: "~/02.spawn-fcgi.sh"
+        config.vm.provision "file", source: "03.apache.sh", destination: "~/03.apache.sh"
         box.vm.provision "shell", inline: <<-SHELL
             mkdir -p ~root/.ssh
             cp ~vagrant/.ssh/auth* ~root/.ssh
-            yum -y install vim
-          SHELL
+            yum -y install epel-release
+            yum -y install spawn-fcgi php php-cli
+            bash /home/vagrant/01.watchlog.sh
+            bash /home/vagrant/02.spawn-fcgi.sh
+            bash /home/vagrant/03.apache.sh
+       SHELL
   
-        end
+      end
     end
   end
- end 
