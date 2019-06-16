@@ -3,6 +3,7 @@ interface eth0
 interface eth1
 !
 interface eth1.{{ vlan_id_1 }}
+  ip ospf cost {{ ospf_cost }}
 !
 interface eth1.{{ vlan_id_2 }}
 !

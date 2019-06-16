@@ -11,4 +11,4 @@ ip_network_2: 192.168.23.0
 hostname: router3
 ip_addr_lo: 10.0.0.3
 router_id: 0.0.0.3
-
+ospf_cost: 50
