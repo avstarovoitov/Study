@@ -16,6 +16,8 @@ interface lo
  ip address {{ ip_addr_lo }}/32
  ipv6 nd suppress-ra
 !
+{{ static_route }}
+!
 ip forwarding
 !
 !
