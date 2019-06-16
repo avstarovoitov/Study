@@ -1,0 +1,19 @@
+---
+# tasks file for vlan
+
+- name: Add the 802.1q module
+  modprobe:
+    name: 8021q
+    state: present
+
+- name: Creating interface.eth1
+  template: src=ifcfg.j2 dest=/etc/sysconfig/network-scripts/ifcfg-eth1 owner=root mode=644
+  notify: restart network
+
+- name: Creating interface.vlan1
+  template: src=ifcfg_1.j2 dest=/etc/sysconfig/network-scripts/ifcfg-eth1.{{ vlan_id_1  }} owner=root mode=644
+  notify: restart network
+
+- name: Creating interface.vlan2
+  template: src=ifcfg_2.j2 dest=/etc/sysconfig/network-scripts/ifcfg-eth1.{{ vlan_id_2  }} owner=root mode=644
+  notify: restart network

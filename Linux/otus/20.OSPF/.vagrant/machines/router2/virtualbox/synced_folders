@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/ogurchik/Study/Linux/otus/20.OSPF","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

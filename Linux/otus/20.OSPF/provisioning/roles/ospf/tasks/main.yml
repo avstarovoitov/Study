@@ -1,0 +1,6 @@
+---
+# tasks file for ospf
+- name: install quagga
+  yum:
+      name: quagga
+      state: latest
