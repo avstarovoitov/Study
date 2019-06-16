@@ -1,2 +1,13 @@
 ---
 # handlers file for ospf
+- name: restart ospfd
+  systemd:
+    name: ospfd
+    state: restarted
+    daemon_reload: yes
+
+- name: restart zebra
+  systemd:
+    name: zebra
+    state: restarted
+    daemon_reload: yes

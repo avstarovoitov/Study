@@ -1,0 +1,23 @@
+interface eth0
+!
+interface eth1
+!
+interface eth1.{{ vlan_id_1 }}
+!
+interface eth1.{{ vlan_id_2 }}
+!
+interface lo
+!
+interface lo1
+!
+!
+router ospf
+ ospf router-id {{ router_id }}
+ log-adjacency-changes detail
+ passive-interface default
+ no passive-interface eth1.{{ vlan_id_1 }}
+ no passive-interface eth1.{{ vlan_id_2 }}
+ network {{ ip_addr_lo }}/32 area 0.0.0.0
+ network 192.168.0.0/16 area 0.0.0.0
+!
+line vty

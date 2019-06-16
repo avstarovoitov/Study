@@ -7,3 +7,7 @@ ip_addr_2: 192.168.13.1
 
 ip_network_1: 192.168.12.0
 ip_network_2: 192.168.13.0
+
+hostname: router1
+ip_addr_lo: 10.0.0.1
+router_id: 0.0.0.1

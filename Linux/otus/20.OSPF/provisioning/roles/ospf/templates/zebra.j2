@@ -1,0 +1,22 @@
+hostname {{ hostname }}
+!
+interface eth0
+ ipv6 nd suppress-ra
+!
+interface eth1
+ ipv6 nd suppress-ra
+!
+interface eth1.{{ vlan_id_1 }}
+ ipv6 nd suppress-ra
+!
+interface eth1.{{ vlan_id_2 }}
+ ipv6 nd suppress-ra
+!
+interface lo
+ ip address {{ ip_addr_lo }}/32
+ ipv6 nd suppress-ra
+!
+ip forwarding
+!
+!
+line vty
