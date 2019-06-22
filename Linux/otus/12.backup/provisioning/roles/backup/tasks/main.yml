@@ -1,0 +1,53 @@
+---
+# tasks file for backup
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: install soft ['bacula-director', 'bacula-storage', 'bacula-console', 'bacula-client', 'mariadb-server']
+  yum:
+      name: ['bacula-director', 'bacula-storage', 'bacula-console', 'bacula-client', 'mariadb-server']
+      state: latest
+
+- name: mariadb add to  startup
+  systemd:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: Run scripts for creating date in db
+  shell: /usr/libexec/bacula/grant_mysql_privileges
+  shell: /usr/libexec/bacula/create_mysql_database -u root
+  shell: /usr/libexec/bacula/make_mysql_tables -u bacula
+
+- name: Create password for db
+  shell: mysql -u root
+  shell: UPDATE mysql.user SET Password=PASSWORD('bacula_db_password') WHERE User='bacula';
+  shell: FLUSH PRIVILEGES;
+  shell: exit
+  notify: restart db
+
+#- name: switch bacula to mysql db
+#  expect:
+#    command: alternatives --config libbaccats.so
+#    responses:
+#      'Enter to keep the current selection\[+\], or type selection number:' : 1
+#    echo: yes
+
+- name: Create a directory for bacula backup
+  file:
+    path: /bacula/backup
+    state: directory
+    owner: bacula
+    group: bacula
+    mode: '0700'
+
+- name: Create a directory for bacula restore
+  file:
+    path: /bacula/restore
+    state: directory
+    owner: bacula
+    group: bacula
+    mode: '0700'
+

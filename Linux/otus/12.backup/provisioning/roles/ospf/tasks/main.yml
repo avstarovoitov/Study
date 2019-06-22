@@ -1,0 +1,30 @@
+---
+# tasks file for ospf
+
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: install quagga
+  yum:
+      name: quagga
+      state: latest
+
+- name: Put ospf config
+  template: src=ospf.j2 dest=/etc/quagga/ospfd.conf owner=quagga group=quaggavt mode=640
+  notify: restart ospfd
+
+- name: Put zebra config
+  template: src=zebra.j2 dest=/etc/quagga/zebra.conf owner=quagga group=quaggavt mode=640
+  notify: restart zebra
+
+- name: routing service startup
+  systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - zebra
+    - ospfd
+
