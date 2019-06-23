@@ -1,0 +1,5 @@
+---
+- hosts: inetRouter1, inetRouter2
+  become: yes
+  roles:
+      - firewall

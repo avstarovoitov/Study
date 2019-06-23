@@ -1,0 +1,5 @@
+---
+- hosts: centralRouter
+  become: yes
+  roles:
+      - knock

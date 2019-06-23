@@ -1,0 +1,12 @@
+---
+# tasks file for knock
+- name: Install nmap
+  yum:
+    name: nmap
+    state: latest
+
+- name: Put knock.sh to /root
+  copy:
+    src: knock.sh
+    dest: /root
+    mode: 0755

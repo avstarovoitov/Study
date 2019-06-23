@@ -1,0 +1,60 @@
+---
+# tasks file for docker
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Enable routing
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Install requared packages
+  yum:
+    name: ["epel-release", "yum-utils", "device-mapper-persistent-data", "lvm2"]
+    state: latest
+
+- name: Setup repository
+  shell: "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
+
+- name: Install Docker
+  yum:
+    name: ["docker-ce", "docker-ce-cli", "containerd.io", "python-pip"]
+    state: latest
+
+- name: Install docker-py
+  shell: pip install docker-py
+
+- name: Start Docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Copy Dockerfile to /root
+  copy:
+    src: "{{ item }}"
+    dest: /root
+  loop:
+    - Dockerfile
+    - index.html
+    - default.conf
+
+- name: Build docker image
+  docker_image:
+    name: nginx
+    source: build
+    build:
+      path: /root
+    state: present
+
+- name: Start nginx on CentralServer:80
+  docker_container:
+    name: my_nginx
+    image: nginx:latest
+    ports: "0.0.0.0:80:80/tcp"
+    state: started

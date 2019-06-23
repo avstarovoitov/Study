@@ -1,0 +1,40 @@
+---
+# tasks file for firewall
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Enable routing
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Stoping firewalld
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: no
+
+- name: Install iptables-services
+  yum:
+    name: iptables-services
+    state: latest
+
+- name: Starting iptables-services
+  systemd:
+    name: iptables
+    state: started
+    enabled: yes
+
+- name: Put iptables config
+  copy:
+    src: "{{ iptable_rules }}"
+    dest: /root
+
+- name: Configure iptables
+  shell: iptables-restore < /root/"{{ iptable_rules }}"
+
