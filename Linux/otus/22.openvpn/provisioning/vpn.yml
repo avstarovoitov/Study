@@ -1,0 +1,16 @@
+---
+#- hosts: all
+#  become: true
+#  roles:
+#    - open-vpn
+
+- hosts: vpn01
+  become: true
+  roles:
+    - open-vpn-server
+
+- hosts: vpn02
+  become: true
+  roles:
+    - open-vpn-client
+

@@ -1,0 +1,13 @@
+---
+# tasks file for open-vpn
+
+- name: Installing epel-release
+  yum:
+    name: epel-release
+    state: latest
+
+- name: Installing Open-vpn and easy-rsa
+  yum:
+    name: ["openvpn", "easy-rsa"]
+    state: latest
+

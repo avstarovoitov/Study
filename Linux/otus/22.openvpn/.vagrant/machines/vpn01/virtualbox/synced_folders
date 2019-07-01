@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/star/Study/Linux/otus/22.openvpn","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

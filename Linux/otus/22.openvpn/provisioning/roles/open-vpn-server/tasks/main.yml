@@ -1,0 +1,11 @@
+---
+# tasks file for open-vpn-server
+- name: Copy Open-Vpn foles for Server
+  copy:
+    src: '{{ item }}'
+    dest: /etc/openvpn/
+  loop:
+    - ca.crt
+    - dh.pem
+    - server.crt
+    - server.key

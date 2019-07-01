@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "provisioning/vpn.yml"
+    ansible.become = "true"
+  end
+
+
+  config.vm.define "vpn01" do |vpn01|
+    vpn01.vm.network "private_network", ip: "10.0.0.10", virtualbox__intnet: "vpn"
+    vpn01.vm.hostname = "vpn01"
+    config.vm.provider :virtualbox do |vb|
+        vb.name = "vpn01"
+	vb.memory = 256
+    end
+  end
+
+  config.vm.define "vpn02" do |vpn02|
+    vpn02.vm.network "private_network", ip: "10.0.0.20", virtualbox__intnet: "vpn"
+    vpn02.vm.hostname = "vpn02"
+    config.vm.provider :virtualbox do |vb|
+        vb.name = "vpn02"
+	vb.memory = 256
+    end
+  end
+
+end
