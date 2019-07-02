@@ -1,5 +1,11 @@
 ---
 # tasks file for open-vpn-server
+
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+
 - name: Copy Open-Vpn foles for Server
   copy:
     src: '{{ item }}'
@@ -9,3 +15,30 @@
     - dh.pem
     - server.crt
     - server.key
+    - server.conf
+
+- name: Creating ccd dir '/etc/openvpn/ccd'
+  file:
+    path: '/etc/openvpn/ccd'
+    state: directory
+
+- name: Copy file with client ip setting
+  copy:
+    src: client
+    dest: '/etc/openvpn/ccd/'
+
+- name: Creating log dir '/var/log/openvpn/'
+  file:
+    path: '/var/log/openvpn/'
+    state: directory
+
+- name: Creating log file '/var/log/openvpn/openvpn-status.log'
+  file:
+    path: '/var/log/openvpn/openvpn-status.log'
+    state: touch
+    
+- name: starting and add openvpn@server to startup
+  systemd:
+    name: 'openvpn@server'
+    state: started
+    enabled: yes

@@ -1,6 +1,11 @@
 ---
 # tasks file for open-vpn-client
 
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+
 - name: Copy Open-Vpn files for Client
   copy:
     src: "{{ item }}"
@@ -9,4 +14,21 @@
     - ca.crt
     - client.crt
     - client.key
+    - client.conf
+
+- name: Creating log dir '/var/log/openvpn/'
+  file:
+    path: '/var/log/openvpn/'
+    state: directory
+
+- name: Creating log file '/var/log/openvpn/openvpn-status.log'
+  file:
+    path: '/var/log/openvpn/openvpn-status.log'
+    state: touch
+
+- name: starting and add openvpn@client to startup
+  systemd:
+    name: 'openvpn@client'
+    state: started
+    enabled: yes
 

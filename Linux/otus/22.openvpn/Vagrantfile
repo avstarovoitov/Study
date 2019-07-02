@@ -11,7 +11,8 @@ Vagrant.configure(2) do |config|
 
 
   config.vm.define "vpn01" do |vpn01|
-    vpn01.vm.network "private_network", ip: "10.0.0.10", virtualbox__intnet: "vpn"
+    vpn01.vm.network "private_network", ip: "10.0.0.10", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "vpn"
+    vpn01.vm.network "private_network", ip: "172.16.1.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "local-1"
     vpn01.vm.hostname = "vpn01"
     config.vm.provider :virtualbox do |vb|
         vb.name = "vpn01"
@@ -20,8 +21,9 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "vpn02" do |vpn02|
-    vpn02.vm.network "private_network", ip: "10.0.0.20", virtualbox__intnet: "vpn"
     vpn02.vm.hostname = "vpn02"
+    vpn02.vm.network "private_network", ip: "10.0.0.20", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "vpn"
+    vpn02.vm.network "private_network", ip: "172.16.2.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "local-2"
     config.vm.provider :virtualbox do |vb|
         vb.name = "vpn02"
 	vb.memory = 256

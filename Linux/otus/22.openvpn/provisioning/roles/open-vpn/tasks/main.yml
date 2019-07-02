@@ -6,8 +6,15 @@
     name: epel-release
     state: latest
 
-- name: Installing Open-vpn and easy-rsa
+- name: Installing Open-vpn
   yum:
-    name: ["openvpn", "easy-rsa"]
+    name: openvpn
     state: latest
 
+- name: Enabling ip forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes

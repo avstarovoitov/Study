@@ -1,0 +1,33 @@
+---
+# tasks file for dummy
+
+- name: Enabling ip forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Loading dummy module
+  modprobe:
+    name: dummy
+    state: present
+
+- name: Add dymmy to '/etc/modules-load.d/'
+  copy:
+    src: dummy.conf
+    dest: '/etc/modules-load.d/'
+
+- name:  Add dymmy to '/etc/modprobe.d/'
+  copy:
+    src: modprobe.d_dummy.conf
+    dest: '/etc/modprobe.d/dummy.conf'
+
+- name: Creating ifcfg for dummy0
+  template:
+    src: ifcfg-dummy0.j2
+    dest: '/etc/sysconfig/network-scripts/ifcfg-dummy0'
+
+- name: ifup dummy0
+  shell: 'ifup dummy0'
