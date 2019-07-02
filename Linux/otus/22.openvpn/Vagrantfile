@@ -10,23 +10,42 @@ Vagrant.configure(2) do |config|
   end
 
 
-  config.vm.define "vpn01" do |vpn01|
-    vpn01.vm.network "private_network", ip: "10.0.0.10", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "vpn"
-    vpn01.vm.network "private_network", ip: "172.16.1.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "local-1"
-    vpn01.vm.hostname = "vpn01"
+  config.vm.define "server" do |server|
+    server.vm.hostname = "server"
+    server.vm.network "private_network", ip: "10.0.0.10", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "vpn"
+    server.vm.network "private_network", ip: "172.16.1.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "local-1"
     config.vm.provider :virtualbox do |vb|
-        vb.name = "vpn01"
+        vb.name = "server"
 	vb.memory = 256
     end
   end
 
-  config.vm.define "vpn02" do |vpn02|
-    vpn02.vm.hostname = "vpn02"
-    vpn02.vm.network "private_network", ip: "10.0.0.20", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "vpn"
-    vpn02.vm.network "private_network", ip: "172.16.2.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "local-2"
+  config.vm.define "client" do |client|
+    client.vm.hostname = "client"
+    client.vm.network "private_network", ip: "10.0.0.20", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "vpn"
+    client.vm.network "private_network", ip: "172.16.2.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "local-2"
     config.vm.provider :virtualbox do |vb|
-        vb.name = "vpn02"
+        vb.name = "client"
 	vb.memory = 256
+    end
+  end
+
+  config.vm.define "pc1" do |pc1|
+    pc1.vm.hostname = "pc1"
+    pc1.vm.network "private_network", ip: "172.16.1.2", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-1"
+    config.vm.provider :virtualbox do |vb|
+        vb.name = "pc1"
+    vb.memory = 256
+    end
+  end
+
+
+  config.vm.define "pc2" do |pc2|
+    pc2.vm.hostname = "pc2"
+    pc2.vm.network "private_network", ip: "172.16.2.2", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-2"
+    config.vm.provider :virtualbox do |vb|
+        vb.name = "pc2"
+    vb.memory = 256
     end
   end
 
