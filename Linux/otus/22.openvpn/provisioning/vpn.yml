@@ -1,16 +1,15 @@
 ---
-- hosts: all
+- hosts: server, client
   become: true
   roles:
     - open-vpn
-#    - dummy
 
-- hosts: vpn01
+- hosts: server
   become: true
   roles:
     - open-vpn-server
 
-- hosts: vpn02
+- hosts: client
   become: true
   roles:
     - open-vpn-client
