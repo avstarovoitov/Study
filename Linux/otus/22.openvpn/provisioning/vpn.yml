@@ -7,14 +7,16 @@
 - hosts: server
   become: true
   roles:
-    - open-vpn-server
+#    - open-vpn-server-tun
+    - open-vpn-server-tap
 
 - hosts: client
   become: true
   roles:
-    - open-vpn-client
+#    - open-vpn-client-tun
+    - open-vpn-client-tap
 
-- hosts: all
-  become: true
-  roles:
-    - utility
+#- hosts: all
+#  become: true
+#  roles:
+#    - utility

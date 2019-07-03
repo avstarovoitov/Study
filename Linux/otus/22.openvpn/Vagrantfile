@@ -14,8 +14,9 @@ Vagrant.configure(2) do |config|
     server.vm.hostname = "server"
     server.vm.network "private_network", ip: "10.0.0.10", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "vpn"
     server.vm.network "private_network", ip: "172.16.1.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "local-1"
-    config.vm.provider :virtualbox do |vb|
-#      vb.name = "server"
+    server.vm.network "forwarded_port", guest: 1194, host: 1194, protocol: "udp"
+    server.vm.provider :virtualbox do |vb|
+      vb.name = "server"
 	  vb.memory = 512
     end
   end
@@ -24,8 +25,8 @@ Vagrant.configure(2) do |config|
     client.vm.hostname = "client"
     client.vm.network "private_network", ip: "10.0.0.20", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "vpn"
     client.vm.network "private_network", ip: "172.16.2.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "local-2"
-    config.vm.provider :virtualbox do |vb|
-#      vb.name = "client"
+    client.vm.provider :virtualbox do |vb|
+      vb.name = "client"
 	  vb.memory = 512
     end
   end
@@ -33,9 +34,9 @@ Vagrant.configure(2) do |config|
   config.vm.define "pc1" do |pc1|
     pc1.vm.hostname = "pc1"
     pc1.vm.network "private_network", ip: "172.16.1.2", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-1"
-    config.vm.provider :virtualbox do |vb|
-#      vb.name = "pc1"
-      vb.memory = 512
+    pc1.vm.provider :virtualbox do |vb|
+      vb.name = "pc1"
+      vb.memory = 256
     end
     pc1.vm.provision "shell", run: "always", inline: <<-SHELL
     ip route del default dev eth0
@@ -47,9 +48,9 @@ Vagrant.configure(2) do |config|
   config.vm.define "pc2" do |pc2|
     pc2.vm.hostname = "pc2"
     pc2.vm.network "private_network", ip: "172.16.2.2", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-2"
-    config.vm.provider :virtualbox do |vb|
-#      vb.name = "pc2"
-      vb.memory = 512
+    pc2.vm.provider :virtualbox do |vb|
+      vb.name = "pc2"
+      vb.memory = 256
     end
     pc2.vm.provision "shell", run: "always", inline: <<-SHELL
     ip route del default dev eth0
