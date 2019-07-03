@@ -1,0 +1,11 @@
+---
+# tasks file for utility
+- name: Installing epel-release
+  yum:
+    name: epel-release
+    state: latest
+
+- name: 'Installing base utilities: tcpdump, traceroute, telnet, vim, htop'
+  yum:
+    name: ['tcpdump', 'traceroute', 'telnet', 'vim', 'htop']
+    state: latest

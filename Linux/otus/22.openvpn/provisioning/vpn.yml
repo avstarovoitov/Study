@@ -13,3 +13,8 @@
   become: true
   roles:
     - open-vpn-client
+
+- hosts: all
+  become: true
+  roles:
+    - utility
