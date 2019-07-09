@@ -1,0 +1,19 @@
+---
+# tasks file for teaming
+- name: 'copy eth1 and eth2 files'
+  copy:
+    src: '{{ item }}'
+    dest: /etc/sysconfig/network-scripts/
+  loop:
+    - ifcfg-eth1
+    - ifcfg-eth2
+  notify: restart network
+
+- name: 'copy team0 file'
+  template:
+    src: ifcfg-team0.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-team0
+  notify: restart network
+
+- name: 'starting teaming'
+  shell: 'ip link set eth1 down && ip link set eth2 down && ifup team0'
