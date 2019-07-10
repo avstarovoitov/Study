@@ -20,5 +20,8 @@
     dest: /etc/sysconfig/network-scripts/ifcfg-team0
   notify: restart network
 
-- name: 'starting teaming'
-  shell: 'ip link set eth1 down && ip link set eth2 down && ifup team0'
+- name: restart network
+  systemd:
+    name: network
+    state: restarted
+    daemon_reload: yes

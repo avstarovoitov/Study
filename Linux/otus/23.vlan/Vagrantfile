@@ -28,7 +28,7 @@ Vagrant.configure(2) do |config|
       auto_config: false
     centralRouter.vm.network "private_network", adapter: 3, virtualbox__intnet: "rr",
       auto_config: false
-#    centralRouter.vm.network "private_network", ip: "172.16.2.1", adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "Server"
+    centralRouter.vm.network "private_network", ip: "172.16.2.1", adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "Server"
     centralRouter.vm.provider :virtualbox do |vb|
       vb.name = "centralRouter"
 	  vb.memory = 256
@@ -41,7 +41,8 @@ Vagrant.configure(2) do |config|
   config.vm.define "testServer1" do |testServer1|
     testServer1.vm.hostname = "testServer1"
     testServer1.vm.network "private_network", ip: "172.16.2.2", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "Server"
-    testServer1.vm.network "private_network",adapter: 3, virtualbox__intnet: "Client"
+    testServer1.vm.network "private_network",adapter: 3, virtualbox__intnet: "Client",
+      auto_config: false
     testServer1.vm.provider :virtualbox do |vb|
       vb.name = "testServer1"
       vb.memory = 256
@@ -64,14 +65,15 @@ Vagrant.configure(2) do |config|
   config.vm.define "testServer2" do |testServer2|
     testServer2.vm.hostname = "testServer2"
     testServer2.vm.network "private_network", ip: "172.16.2.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "Server"
-    testServer2.vm.network "private_network",adapter: 3, virtualbox__intnet: "Client"
+    testServer2.vm.network "private_network",adapter: 3, virtualbox__intnet: "Client",
+      auto_config: false
     testServer2.vm.provider :virtualbox do |vb|
       vb.name = "testServer2"
       vb.memory = 256
     end
-#    testServer2.vm.provision "shell", run: "always", inline: <<-SHELL
-#    ip route add default via 172.16.2.1 dev eth1
-#    SHELL
+    testServer2.vm.provision "shell", run: "always", inline: <<-SHELL
+    ip route add default via 172.16.2.1 dev eth1
+    SHELL
   end
 
 
@@ -82,8 +84,6 @@ Vagrant.configure(2) do |config|
       vb.name = "testClient2"
       vb.memory = 256
     end
-    testClient2.vm.provision "shell", run: "always", inline: <<-SHELL
-    SHELL
   end
 
 end
