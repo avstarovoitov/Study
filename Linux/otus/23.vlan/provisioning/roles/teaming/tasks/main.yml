@@ -1,5 +1,10 @@
 ---
 # tasks file for teaming
+- name: 'update teamd'
+  yum:
+    name: teamd
+    state: latest
+
 - name: 'copy eth1 and eth2 files'
   copy:
     src: '{{ item }}'

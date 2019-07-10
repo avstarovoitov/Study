@@ -12,8 +12,10 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "inetRouter" do |inetRouter|
     inetRouter.vm.hostname = "inetRouter"
-    inetRouter.vm.network "private_network", adapter: 2, virtualbox__intnet: "rr"
-    inetRouter.vm.network "private_network", adapter: 3, virtualbox__intnet: "rr"
+    inetRouter.vm.network "private_network", adapter: 2, virtualbox__intnet: "rr",
+      auto_config: false
+    inetRouter.vm.network "private_network", adapter: 3, virtualbox__intnet: "rr",
+      auto_config: false
     inetRouter.vm.provider :virtualbox do |vb|
       vb.name = "inetRouter"
 	  vb.memory = 256
@@ -22,16 +24,18 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "centralRouter" do |centralRouter|
     centralRouter.vm.hostname = "centralRouter"
-    centralRouter.vm.network "private_network", adapter: 2, virtualbox__intnet: "rr"
-    centralRouter.vm.network "private_network", adapter: 3, virtualbox__intnet: "rr"
-    centralRouter.vm.network "private_network", ip: "172.16.2.1", adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "Server"
+    centralRouter.vm.network "private_network", adapter: 2, virtualbox__intnet: "rr",
+      auto_config: false
+    centralRouter.vm.network "private_network", adapter: 3, virtualbox__intnet: "rr",
+      auto_config: false
+#    centralRouter.vm.network "private_network", ip: "172.16.2.1", adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "Server"
     centralRouter.vm.provider :virtualbox do |vb|
       vb.name = "centralRouter"
 	  vb.memory = 256
     end
-    centralRouter.vm.provision "shell", run: "always", inline: <<-SHELL
-    ip route del default dev eth0
-    SHELL
+#    centralRouter.vm.provision "shell", run: "always", inline: <<-SHELL
+#    ip route del default dev eth0
+#    SHELL
   end
 
   config.vm.define "testServer1" do |testServer1|
