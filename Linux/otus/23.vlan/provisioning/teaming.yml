@@ -1,5 +1,0 @@
----
-- hosts: inetRouter, centralRouter
-  become: yes
-  roles:
-      - teaming

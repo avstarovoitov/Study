@@ -5,7 +5,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/teaming.yml"
+    ansible.playbook = "provisioning/teaming-vlan.yml"
     ansible.become = "true"
   end
 
@@ -33,9 +33,6 @@ Vagrant.configure(2) do |config|
       vb.name = "centralRouter"
 	  vb.memory = 256
     end
-#    centralRouter.vm.provision "shell", run: "always", inline: <<-SHELL
-#    ip route del default dev eth0
-#    SHELL
   end
 
   config.vm.define "testServer1" do |testServer1|
