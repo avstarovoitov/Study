@@ -1,0 +1,3 @@
+interface: eth2
+vlan: 20
+ip_addr: 10.10.10.1

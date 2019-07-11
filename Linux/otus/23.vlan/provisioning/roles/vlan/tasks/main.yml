@@ -1,0 +1,18 @@
+---
+# tasks file for vlan
+
+- name: 'Configuring master interface'
+  template:
+    src: master-interface.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ interface }}
+
+- name: 'Configuring vlan interface'
+  template:
+    src: vlan-interface.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ interface }}.{{ vlan }}
+
+- name: 'Restarting network'
+  systemd:
+    name: network
+    state: restarted
+    daemon_reload: yes

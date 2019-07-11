@@ -1,0 +1,10 @@
+---
+- hosts: inetRouter, centralRouter
+  become: yes
+  roles:
+      - teaming
+
+- hosts: testServer1, testServer2, testClient1, testClient2
+  become: yes
+  roles:
+      - vlan
