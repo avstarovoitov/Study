@@ -1,0 +1,23 @@
+### interfaces ###
+eth1_addr: 100.0.0.10
+eth1_prefix: 24
+eth2_addr: 10.0.0.10
+eth2_prefix: 24
+
+### keepalivd ###
+vrrp_role: MASTER
+vrrp_interface_internet: eth1
+vrrp_interface_local: eth2
+vrrp_rid: 50
+vrrp_priority: 100
+vrrp_password: vrrp_password
+vrrp_ip_internet_vip: 100.0.0.1
+vrrp_ip_local_vip: 10.0.0.1
+
+### ipvs pat in keepalived ###
+ipvs_ip_vip_httpd: 100.0.0.1
+ipvs_port_vip_httpd: 80
+ipvs_lb_algo: rr
+real_node_1_ip: 10.0.0.100
+real_node_2_ip: 10.0.0.200
+real_port: 80

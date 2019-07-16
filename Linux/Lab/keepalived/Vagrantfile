@@ -1,0 +1,56 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "provisioning/keepalived.yml"
+    ansible.become = "true"
+  end
+
+  config.vm.define "border" do |border|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    border.vm.hostname = "border"
+    border.vm.provider :virtualbox do |vb|
+      vb.name = "border"
+      vb.memory = 512
+    end
+  end
+
+  config.vm.define "master" do |master|
+  config.vm.box = "centos/7"
+    master.vm.hostname = "vrrp-master"
+    master.vm.provider :virtualbox do |vb|
+      vb.name = "vrrp-master"
+	  vb.memory = 512
+    end
+  end
+
+  config.vm.define "backup" do |backup|
+  config.vm.box = "centos/7"
+    backup.vm.hostname = "vrrp-backup"
+    backup.vm.provider :virtualbox do |vb|
+      vb.name = "vrrp-backup"
+      vb.memory = 512
+    end
+  end
+
+  config.vm.define "node1" do |node1|
+  config.vm.box = "centos/7"
+    node1.vm.hostname = "node1"
+    node1.vm.provider :virtualbox do |vb|
+      vb.name = "node1"
+      vb.memory = 512
+    end
+  end
+
+  config.vm.define "node2" do |node2|
+  config.vm.box = "centos/7"
+    node2.vm.hostname = "node2"
+    node2.vm.provider :virtualbox do |vb|
+      vb.name = "node2"
+      vb.memory = 512
+    end
+  end
+
+end

@@ -1,0 +1,4 @@
+eth1_addr: 10.0.0.100
+eth1_prefix: 24
+eth2_addr: 172.0.0.100
+eth2_prefix: 24

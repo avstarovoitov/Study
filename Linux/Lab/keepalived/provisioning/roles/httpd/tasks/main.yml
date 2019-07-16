@@ -1,0 +1,12 @@
+---
+# tasks file for httpd
+- name: 'Installing httpd'
+  yum:
+    name: httpd
+    state: latest
+
+- name: 'starting httpd'
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes

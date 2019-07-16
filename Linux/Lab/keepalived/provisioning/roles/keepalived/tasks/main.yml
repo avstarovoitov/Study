@@ -1,0 +1,18 @@
+---
+# tasks file for keepalived
+- name: 'Installing keepalived and ipvsadm'
+  yum:
+    name: ['keepalived', 'ipvsadm']
+    state: latest
+
+- name: 'Congiguring keepalived'
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+  notify: keepalived restart
+
+- name: 'Starting keepalived'
+  systemd:
+    name: keepalived
+    state: started
+    enabled: yes

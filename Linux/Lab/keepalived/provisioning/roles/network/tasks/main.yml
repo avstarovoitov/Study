@@ -1,0 +1,11 @@
+---
+# tasks file for network
+- name: 'Configuring eth1'
+  template:
+    src: ifcfg-eth1.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth1
+
+- name: 'Configuring eth2'
+  template:
+    src: ifcfg-eth2.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth2

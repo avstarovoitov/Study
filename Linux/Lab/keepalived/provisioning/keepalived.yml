@@ -1,0 +1,16 @@
+---
+- hosts: master, backup, node1, node2
+  become: true
+  roles:
+    - utility
+    - network
+
+- hosts: node1, node2
+  become: true
+  roles:
+    - httpd
+
+- hosts: master, backup
+  become: yes
+  roles:
+    - keepalived
