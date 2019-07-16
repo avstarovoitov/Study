@@ -1,0 +1,6 @@
+---
+# handlers file for border
+- name: restart network
+  systemd:
+    name: networking
+    state: restarted

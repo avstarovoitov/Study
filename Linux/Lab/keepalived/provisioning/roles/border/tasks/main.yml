@@ -1,0 +1,8 @@
+---
+# tasks file for border
+
+- name: 'Put interfaces'
+  copy:
+    src: interfaces
+    dest: /etc/network/interfaces
+  notify: restart network

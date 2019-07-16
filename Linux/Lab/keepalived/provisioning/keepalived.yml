@@ -14,3 +14,8 @@
   become: yes
   roles:
     - keepalived
+
+- hosts: border
+  become: true
+  roles:
+    - border
