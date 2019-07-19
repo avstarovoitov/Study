@@ -15,4 +15,3 @@ A Bind's DNS lab with Vagrant and Ansible, based on CentOS 7.
     * slave, recursive
   * client (192.168.50.15)
     * used to test the env, runs rndc and nsupdate
-  * zone transfer: TSIG key
