@@ -1,0 +1,27 @@
+---
+# tasks file for master
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: 'Install software'
+  yum:
+    name: ['vim', 'dhcp', 'ansible']
+    state: latest
+
+- name: 'Put eth1 config'
+  copy:
+    src: ifcfg-eth1
+    dest: /etc/sysconfig/network-scripts/
+
+- name: 'Put dhcpd.conf'
+  copy:
+    src: dhcpd.conf
+    dest: /etc/dhcp/
+
+- name: 'Enable DHCP server'
+  systemd:
+    name: dhcpd
+    enabled: yes
+    state: stopped

@@ -1,0 +1,193 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+### Service Provider 1
+
+  config.vm.define "SP1-BR1" do |sp1br1|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    sp1br1.vm.hostname = "SP1BR1"
+    sp1br1.vm.provider :virtualbox do |vb|
+      vb.name = "SP1-BR1"
+      vb.memory = 256
+    end
+  end
+
+  config.vm.define "SP1-BR2" do |sp1br2|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    sp1br2.vm.hostname = "SP1BR2"
+    sp1br2.vm.provider :virtualbox do |vb|
+      vb.name = "SP1-BR2"
+      vb.memory = 256
+    end
+  end
+
+### Service Provider 2
+
+  config.vm.define "SP2-BR1" do |sp2br1|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    sp2br1.vm.hostname = "SP2BR1"
+    sp2br1.vm.provider :virtualbox do |vb|
+      vb.name = "SP2-BR1"
+      vb.memory = 256
+    end
+  end
+
+  config.vm.define "SP2-BR2" do |sp2br2|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    sp2br2.vm.hostname = "SP2BR2"
+    sp2br2.vm.provider :virtualbox do |vb|
+      vb.name = "SP2-BR2"
+      vb.memory = 256
+    end
+  end
+
+### Data Center 1
+
+###### Border routers
+
+  config.vm.define "DC1-BR1" do |dc1br1|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    dc1br1.vm.hostname = "DC1BR1"
+    dc1br1.vm.provider :virtualbox do |vb|
+      vb.name = "DC1-BR1"
+      vb.memory = 256
+    end
+  end
+
+  config.vm.define "DC1-BR2" do |dc1br2|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    dc1br2.vm.hostname = "DC1BR2"
+    dc1br2.vm.provider :virtualbox do |vb|
+      vb.name = "DC1-BR2"
+      vb.memory = 256
+    end
+  end
+
+###### Backbone routers
+
+  config.vm.define "DC1-BB1" do |dc1bb1|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    dc1bb1.vm.hostname = "DC1BB1"
+    dc1bb1.vm.provider :virtualbox do |vb|
+      vb.name = "DC1-BB1"
+      vb.memory = 256
+    end
+  end
+
+  config.vm.define "DC1-BB2" do |dc1bb2|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    dc1bb2.vm.hostname = "DC1BB2"
+    dc1bb2.vm.provider :virtualbox do |vb|
+      vb.name = "DC1-BB2"
+      vb.memory = 256
+    end
+  end
+
+###### Infrastructure routers
+
+  config.vm.define "DC1-IR1" do |dc1ir1|
+  config.vm.box = "centos/7"
+    dc1ir1.vm.hostname = "DC1-IR1"
+    dc1ir1.vm.provider :virtualbox do |vb|
+      vb.name = "DC1-IR1"
+	  vb.memory = 256
+    end
+  end
+
+  config.vm.define "DC1-IR2" do |dc1ir2|
+  config.vm.box = "centos/7"
+    dc1ir2.vm.hostname = "DC1-IR2"
+    dc1ir2.vm.provider :virtualbox do |vb|
+      vb.name = "DC1-IR2"
+	  vb.memory = 256
+    end
+  end
+
+###### Infrastructure servers
+
+
+### Data Center 2
+
+###### Border routers
+
+   config.vm.define "DC2-BR1" do |dc2br1|
+   config.vm.box = "CumulusCommunity/cumulus-vx"
+    dc2br1.vm.hostname = "DC2BR1"
+    dc2br1.vm.provider :virtualbox do |vb|
+      vb.name = "DC2-BR1"
+      vb.memory = 256
+    end
+  end
+
+  config.vm.define "DC2-BR2" do |dc2br2|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    dc2br2.vm.hostname = "DC2BR2"
+    dc2br2.vm.provider :virtualbox do |vb|
+      vb.name = "DC2-BR2"
+      vb.memory = 256
+    end
+  end
+
+###### Backbone routers
+
+   config.vm.define "DC2-BB1" do |dc2bb1|
+   config.vm.box = "CumulusCommunity/cumulus-vx"
+    dc2bb1.vm.hostname = "DC2BB1"
+    dc2bb1.vm.provider :virtualbox do |vb|
+      vb.name = "DC2-BB1"
+      vb.memory = 256
+    end
+  end
+
+  config.vm.define "DC2-BB2" do |dc2bb2|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+    dc2bb2.vm.hostname = "DC2BB2"
+    dc2bb2.vm.provider :virtualbox do |vb|
+      vb.name = "DC2-BB2"
+      vb.memory = 256
+    end
+  end
+
+###### Infrastructure routers
+
+  config.vm.define "DC2-IR1" do |dc2ir1|
+  config.vm.box = "centos/7"
+    dc2ir1.vm.hostname = "DC2-IR1"
+    dc2ir1.vm.provider :virtualbox do |vb|
+      vb.name = "DC2-IR1"
+	  vb.memory = 256
+    end
+  end
+
+  config.vm.define "DC2-IR2" do |dc2ir2|
+  config.vm.box = "centos/7"
+    dc2ir2.vm.hostname = "DC2-IR2"
+    dc2ir2.vm.provider :virtualbox do |vb|
+      vb.name = "DC2-IR2"
+	  vb.memory = 256
+    end
+  end
+
+###### Infrastructure servers
+
+
+### Management
+
+  config.vm.define "MASTER" do |master|
+  config.vm.box = "centos/7"
+    master.vm.hostname = "MASTER"
+    master.vm.provider :virtualbox do |vb|
+      vb.name = "MASTER"
+      vb.memory = 512
+    end
+ 
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "provisioning/master.yml"
+    ansible.become = "true"
+  end
+
+  end
+
+end
