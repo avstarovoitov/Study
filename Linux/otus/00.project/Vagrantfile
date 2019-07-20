@@ -7,6 +7,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "SP1-BR1" do |sp1br1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF0001"
     sp1br1.vm.hostname = "SP1BR1"
     sp1br1.vm.provider :virtualbox do |vb|
       vb.name = "SP1-BR1"
@@ -16,6 +17,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "SP1-BR2" do |sp1br2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF0002"
     sp1br2.vm.hostname = "SP1BR2"
     sp1br2.vm.provider :virtualbox do |vb|
       vb.name = "SP1-BR2"
@@ -27,6 +29,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "SP2-BR1" do |sp2br1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF0003"
     sp2br1.vm.hostname = "SP2BR1"
     sp2br1.vm.provider :virtualbox do |vb|
       vb.name = "SP2-BR1"
@@ -36,6 +39,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "SP2-BR2" do |sp2br2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF0004"
     sp2br2.vm.hostname = "SP2BR2"
     sp2br2.vm.provider :virtualbox do |vb|
       vb.name = "SP2-BR2"
@@ -49,6 +53,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-BR1" do |dc1br1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF0005"
     dc1br1.vm.hostname = "DC1BR1"
     dc1br1.vm.provider :virtualbox do |vb|
       vb.name = "DC1-BR1"
@@ -58,6 +63,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-BR2" do |dc1br2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF0006"
     dc1br2.vm.hostname = "DC1BR2"
     dc1br2.vm.provider :virtualbox do |vb|
       vb.name = "DC1-BR2"
@@ -69,6 +75,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-BB1" do |dc1bb1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF0007"
     dc1bb1.vm.hostname = "DC1BB1"
     dc1bb1.vm.provider :virtualbox do |vb|
       vb.name = "DC1-BB1"
@@ -78,6 +85,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-BB2" do |dc1bb2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF0008"
     dc1bb2.vm.hostname = "DC1BB2"
     dc1bb2.vm.provider :virtualbox do |vb|
       vb.name = "DC1-BB2"
@@ -89,6 +97,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-IR1" do |dc1ir1|
   config.vm.box = "centos/7"
+  config.vm.base_mac = "DEADBEAF0009"
     dc1ir1.vm.hostname = "DC1-IR1"
     dc1ir1.vm.provider :virtualbox do |vb|
       vb.name = "DC1-IR1"
@@ -98,6 +107,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-IR2" do |dc1ir2|
   config.vm.box = "centos/7"
+  config.vm.base_mac = "DEADBEAF000A"
     dc1ir2.vm.hostname = "DC1-IR2"
     dc1ir2.vm.provider :virtualbox do |vb|
       vb.name = "DC1-IR2"
@@ -112,8 +122,9 @@ Vagrant.configure(2) do |config|
 
 ###### Border routers
 
-   config.vm.define "DC2-BR1" do |dc2br1|
-   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.define "DC2-BR1" do |dc2br1|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF000B"
     dc2br1.vm.hostname = "DC2BR1"
     dc2br1.vm.provider :virtualbox do |vb|
       vb.name = "DC2-BR1"
@@ -123,6 +134,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC2-BR2" do |dc2br2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF000C"
     dc2br2.vm.hostname = "DC2BR2"
     dc2br2.vm.provider :virtualbox do |vb|
       vb.name = "DC2-BR2"
@@ -132,8 +144,9 @@ Vagrant.configure(2) do |config|
 
 ###### Backbone routers
 
-   config.vm.define "DC2-BB1" do |dc2bb1|
-   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.define "DC2-BB1" do |dc2bb1|
+  config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF000D"
     dc2bb1.vm.hostname = "DC2BB1"
     dc2bb1.vm.provider :virtualbox do |vb|
       vb.name = "DC2-BB1"
@@ -143,6 +156,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC2-BB2" do |dc2bb2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.base_mac = "DEADBEAF000E"
     dc2bb2.vm.hostname = "DC2BB2"
     dc2bb2.vm.provider :virtualbox do |vb|
       vb.name = "DC2-BB2"
@@ -154,6 +168,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC2-IR1" do |dc2ir1|
   config.vm.box = "centos/7"
+  config.vm.base_mac = "DEADBEAF000F"
     dc2ir1.vm.hostname = "DC2-IR1"
     dc2ir1.vm.provider :virtualbox do |vb|
       vb.name = "DC2-IR1"
@@ -163,6 +178,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC2-IR2" do |dc2ir2|
   config.vm.box = "centos/7"
+  config.vm.base_mac = "DEADBEAF0010"
     dc2ir2.vm.hostname = "DC2-IR2"
     dc2ir2.vm.provider :virtualbox do |vb|
       vb.name = "DC2-IR2"
@@ -177,6 +193,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "MASTER" do |master|
   config.vm.box = "centos/7"
+  config.vm.base_mac = "DEADBEAFAAAA"
     master.vm.hostname = "MASTER"
     master.vm.provider :virtualbox do |vb|
       vb.name = "MASTER"
