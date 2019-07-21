@@ -7,6 +7,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "SP1-BR1" do |sp1br1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0001"
     sp1br1.vm.network "private_network", ip: "172.16.0.1", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw1"
     sp1br1.vm.network "private_network", ip: "100.0.0.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1br1-sp1br1"
@@ -19,6 +20,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "SP1-BR2" do |sp1br2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0002"
     sp1br2.vm.network "private_network", ip: "172.16.0.2", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw1"
     sp1br2.vm.network "private_network", ip: "100.0.0.13", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc2br2-sp1br2"
@@ -33,6 +35,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "SP2-BR1" do |sp2br1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0003"
     sp2br1.vm.network "private_network", ip: "172.16.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw1"
     sp2br1.vm.network "private_network", ip: "100.0.0.5", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1br2-sp2br1"
@@ -45,6 +48,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "SP2-BR2" do |sp2br2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0004"
     sp2br2.vm.network "private_network", ip: "172.16.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw1"
     sp2br2.vm.network "private_network", ip: "100.0.0.9", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1br1-sp2br2"
@@ -61,6 +65,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-BR1" do |dc1br1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0005"
     dc1br1.vm.network "private_network", ip: "100.0.0.2", adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "dc1br1-sp1br1"
     dc1br1.vm.network "private_network", ip: "10.1.0.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
@@ -73,6 +78,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-BR2" do |dc1br2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0006"
     dc1br2.vm.network "private_network", ip: "100.0.0.6", adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "dc1br2-sp2br1"
     dc1br2.vm.network "private_network", ip: "10.1.0.2", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
@@ -87,6 +93,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-BB1" do |dc1bb1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0007"
     dc1bb1.vm.network "private_network", ip: "10.1.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
     dc1bb1.vm.network "private_network", ip: "10.12.0.5", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb1-dc2bb1"
@@ -100,6 +107,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-BB2" do |dc1bb2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0008"
     dc1bb2.vm.network "private_network", ip: "10.1.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
     dc1bb2.vm.network "private_network", ip: "10.12.0.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb2-dc2bb2"
@@ -144,6 +152,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC2-BR1" do |dc2br1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF000B"
     dc2br1.vm.network "private_network", ip: "100.0.0.14", adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "dc2br1-sp1br2"
     dc2br1.vm.network "private_network", ip: "10.2.0.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
@@ -156,6 +165,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC2-BR2" do |dc2br2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF000C"
     dc2br2.vm.network "private_network", ip: "100.0.0.10", adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "dc2br2-sp2br2"
     dc2br2.vm.network "private_network", ip: "10.2.0.2", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
@@ -170,6 +180,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC2-BB1" do |dc2bb1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF000D"
     dc2bb1.vm.network "private_network", ip: "10.2.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
     dc2bb1.vm.network "private_network", ip: "10.12.0.6", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb1-dc2bb1"
@@ -183,6 +194,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC2-BB2" do |dc2bb2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
+  config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF000E"
     dc2bb2.vm.network "private_network", ip: "10.2.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
     dc2bb2.vm.network "private_network", ip: "10.12.0.2", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb2-dc2bb2"
