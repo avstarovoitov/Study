@@ -123,6 +123,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-IR1" do |dc1ir1|
   config.vm.box = "centos/7"
+  config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF0009"
     dc1ir1.vm.network "private_network", ip: "10.1.0.6", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
     dc1ir1.vm.hostname = "DC1-IR1"
@@ -134,6 +135,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC1-IR2" do |dc1ir2|
   config.vm.box = "centos/7"
+  config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF000A"
     dc1ir2.vm.network "private_network", ip: "10.1.0.5", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
     dc1ir2.vm.hostname = "DC1-IR2"
@@ -210,6 +212,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC2-IR1" do |dc2ir1|
   config.vm.box = "centos/7"
+  config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF000F"
     dc2ir1.vm.network "private_network", ip: "10.2.0.6", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
     dc2ir1.vm.hostname = "DC2-IR1"
@@ -221,6 +224,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "DC2-IR2" do |dc2ir2|
   config.vm.box = "centos/7"
+  config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF0010"
     dc2ir2.vm.network "private_network", ip: "10.2.0.5", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
     dc2ir2.vm.hostname = "DC2-IR2"
