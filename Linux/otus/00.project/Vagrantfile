@@ -63,17 +63,23 @@ Vagrant.configure(2) do |config|
 
 ###### Border routers
 
-  config.vm.define "DC1-BR1" do |dc1br1|
+  config.vm.define "dc1br1" do |dc1br1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0005"
     dc1br1.vm.network "private_network", ip: "100.0.0.2", adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "dc1br1-sp1br1"
     dc1br1.vm.network "private_network", ip: "10.1.0.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
-    dc1br1.vm.hostname = "DC1BR1"
+    dc1br1.vm.hostname = "dc1br1"
     dc1br1.vm.provider :virtualbox do |vb|
-      vb.name = "DC1-BR1"
+      vb.name = "dc1br1"
       vb.memory = 256
     end
+  config.vm.provision "ansible" do |ansible|
+#    ansible.inventory_path = "provisioning/hosts"
+    ansible.playbook = "provisioning/routing.yml"
+    ansible.become = "true"
+  end
+
   end
 
   config.vm.define "DC1-BR2" do |dc1br2|
