@@ -1,0 +1,14 @@
+---
+
+### Base ###
+hostname: dc2br2
+
+### OSPF ###
+ospfd: 'yes'
+rid: 2.0.0.2
+ospf:
+  - network: 10.2.0.0/24
+    area: 2
+
+### BGP ###
+bgpd: 'yes'

@@ -1,0 +1,21 @@
+frr defaults datacenter
+hostname {{ hostname }}
+username cumulus nopassword
+!
+ip forwarding
+!
+service integrated-vtysh-config
+!
+log syslog informational
+!
+{% if ospfd == 'yes' %}
+router ospf
+ ospf router-id {{ rid }}
+ log-adjacency-changes detail
+ auto-cost reference-bandwidth 10000
+ {% for networks in ospf %}
+ network {{ networks.network }} area {{ networks.area }}
+ {% endfor %}
+{% endif %}
+line vty
+!

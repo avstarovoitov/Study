@@ -1,0 +1,18 @@
+---
+
+### Base ###
+hostname: dc1bb2
+
+### OSPF ###
+ospfd: 'yes'
+rid: 1.0.0.3
+ospf:
+  - network: 10.1.0.0/24
+    area: 1
+  - network: 10.12.0.8/30
+    area: 0
+  - network: 10.12.0.0/30
+    area: 0
+
+### BGP ###
+bgpd: 'no'

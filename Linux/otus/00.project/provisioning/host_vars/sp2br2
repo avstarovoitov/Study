@@ -1,0 +1,10 @@
+---
+
+### Base ###
+hostname: sp2br2
+
+### OSPF ###
+ospfd: 'no'
+
+### BGP ###
+bgpd: 'yes'

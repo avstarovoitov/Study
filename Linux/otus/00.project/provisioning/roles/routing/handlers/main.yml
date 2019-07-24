@@ -1,0 +1,7 @@
+---
+# handlers file for routing
+
+- name: restart routing
+  systemd:
+    name: frr
+    state: restarted
