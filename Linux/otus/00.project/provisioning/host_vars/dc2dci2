@@ -1,7 +1,7 @@
 ---
 
 ### Base ###
-hostname: dc2bb2
+hostname: dc2dci2
 
 ### OSPF ###
 ospfd: 'yes'
