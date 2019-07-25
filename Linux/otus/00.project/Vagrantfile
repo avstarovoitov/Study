@@ -74,6 +74,8 @@ Vagrant.configure(2) do |config|
       vb.name = "dc1br1"
       vb.memory = 256
     end
+    dc1br1.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc1br1.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -91,6 +93,8 @@ Vagrant.configure(2) do |config|
       vb.name = "dc1br2"
       vb.memory = 256
     end
+    dc1br2.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc1br2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -111,6 +115,8 @@ Vagrant.configure(2) do |config|
       vb.name = "dc1dci1"
       vb.memory = 256
     end
+    dc1dci1.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc1dci1.vm.provision :ansible do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -129,6 +135,8 @@ Vagrant.configure(2) do |config|
       vb.name = "dc1dci2"
       vb.memory = 256
     end
+    dc1dci2.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc1dci2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -155,6 +163,8 @@ Vagrant.configure(2) do |config|
       inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
     dc1ir1.vm.provision "shell",
       inline: "rm -f /etc/frr/*"
+    dc1ir1.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc1ir1.vm.provision "ansible"  do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -179,6 +189,8 @@ Vagrant.configure(2) do |config|
       inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
     dc1ir2.vm.provision "shell",
       inline: "rm -f /etc/frr/*"
+    dc1ir2.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc1ir2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -203,6 +215,8 @@ Vagrant.configure(2) do |config|
       vb.name = "dc2br1"
       vb.memory = 256
     end
+    dc2br1.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc2br1.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -220,6 +234,8 @@ Vagrant.configure(2) do |config|
       vb.name = "dc2br2"
       vb.memory = 256
     end
+    dc2br2.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc2br2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -240,6 +256,8 @@ Vagrant.configure(2) do |config|
       vb.name = "dc2dci1"
       vb.memory = 256
     end
+    dc2dci1.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc2dci1.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -258,6 +276,8 @@ Vagrant.configure(2) do |config|
       vb.name = "dc2dci2"
       vb.memory = 256
     end
+    dc2dci2.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc2dci2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -284,6 +304,8 @@ Vagrant.configure(2) do |config|
       inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
     dc2ir1.vm.provision "shell",
       inline: "rm -f /etc/frr/*"
+    dc2ir1.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc2ir1.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
@@ -308,6 +330,8 @@ Vagrant.configure(2) do |config|
       inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
     dc2ir2.vm.provision "shell",
       inline: "rm -f /etc/frr/*"
+    dc2ir2.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc2ir2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"

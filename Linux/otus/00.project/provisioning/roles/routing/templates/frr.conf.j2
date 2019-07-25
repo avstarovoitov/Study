@@ -8,6 +8,19 @@ service integrated-vtysh-config
 !
 log syslog informational
 !
+{% if bgpd == 'yes' %}
+router bgp {{ my_asn }}
+ {% for neighbors in bgp_neighbors %}
+ neighbor {{ neighbors.neighbor }} remote-as {{ neighbors.asn }}
+ {% endfor %}
+!
+ address-family ipv4 unicast
+  {% for nlris in bgp_nlri %}
+  network {{ nlris.nlri }}
+  {% endfor %}
+ exit-address-family
+{% endif %}
+!
 {% if ospfd == 'yes' %}
 router ospf
  ospf router-id {{ rid }}
