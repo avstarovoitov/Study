@@ -74,11 +74,10 @@ Vagrant.configure(2) do |config|
       vb.name = "dc1br1"
       vb.memory = 256
     end
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
-  end
-
+    dc1br1.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
 
   config.vm.define "dc1br2" do |dc1br2|
@@ -92,52 +91,49 @@ Vagrant.configure(2) do |config|
       vb.name = "dc1br2"
       vb.memory = 256
     end
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc1br2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
 
- end
+###### DCI routers
 
-###### Backbone routers
-
-  config.vm.define "dc1bb1" do |dc1bb1|
+  config.vm.define "dc1dci1" do |dc1dci1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0007"
-    dc1bb1.vm.network "private_network", ip: "10.1.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
-    dc1bb1.vm.network "private_network", ip: "10.12.0.5", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb1-dc2bb1"
-    dc1bb1.vm.network "private_network", ip: "10.12.0.9", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb1-dc1bb2"
-    dc1bb1.vm.hostname = "dc1bb1"
-    dc1bb1.vm.provider :virtualbox do |vb|
-      vb.name = "dc1bb1"
+    dc1dci1.vm.network "private_network", ip: "10.1.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
+    dc1dci1.vm.network "private_network", ip: "10.12.0.5", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci1-dc2dci1"
+    dc1dci1.vm.network "private_network", ip: "10.12.0.9", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci1-dc1dci2"
+    dc1dci1.vm.hostname = "dc1dci1"
+    dc1dci1.vm.provider :virtualbox do |vb|
+      vb.name = "dc1dci1"
       vb.memory = 256
     end
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc1dci1.vm.provision :ansible do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
 
- end
-
-  config.vm.define "dc1bb2" do |dc1bb2|
+  config.vm.define "dc1dci2" do |dc1dci2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0008"
-    dc1bb2.vm.network "private_network", ip: "10.1.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
-    dc1bb2.vm.network "private_network", ip: "10.12.0.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb2-dc2bb2"
-    dc1bb2.vm.network "private_network", ip: "10.12.0.10", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb1-dc1bb2"
-    dc1bb2.vm.hostname = "dc1bb2"
-    dc1bb2.vm.provider :virtualbox do |vb|
-      vb.name = "dc1bb2"
+    dc1dci2.vm.network "private_network", ip: "10.1.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
+    dc1dci2.vm.network "private_network", ip: "10.12.0.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci2-dc2dci2"
+    dc1dci2.vm.network "private_network", ip: "10.12.0.10", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci1-dc1dci2"
+    dc1dci2.vm.hostname = "dc1dci2"
+    dc1dci2.vm.provider :virtualbox do |vb|
+      vb.name = "dc1dci2"
       vb.memory = 256
     end
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc1dci2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
-
- end
 
 ###### Infrastructure routers
 
@@ -151,19 +147,19 @@ Vagrant.configure(2) do |config|
       vb.name = "dc1ir1"
 	  vb.memory = 256
     end
-  config.vm.provision "shell", inline: <<-SHELL
-        yum install pcre-devel
-        yum -y install https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-10/CentOS-7-x86_64-Packages/libyang-0.16.111-0.x86_64.rpm
-        yum install -y https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm
-        rm -f /etc/frr/*
-        SHELL
-
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc1ir1.vm.provision "shell",
+      inline: "yum -y install pcre-devel"
+    dc1ir1.vm.provision "shell",
+      inline: "yum -y install https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-10/CentOS-7-x86_64-Packages/libyang-0.16.111-0.x86_64.rpm"
+    dc1ir1.vm.provision "shell",
+      inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
+    dc1ir1.vm.provision "shell",
+      inline: "rm -f /etc/frr/*"
+    dc1ir1.vm.provision "ansible"  do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
-
- end
 
   config.vm.define "dc1ir2" do |dc1ir2|
   config.vm.box = "centos/7"
@@ -175,19 +171,19 @@ Vagrant.configure(2) do |config|
       vb.name = "dc1ir2"
 	  vb.memory = 256
     end
-  config.vm.provision "shell", inline: <<-SHELL
-        yum install pcre-devel
-        yum -y install https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-10/CentOS-7-x86_64-Packages/libyang-0.16.111-0.x86_64.rpm
-        yum install -y https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm
-        rm -f /etc/frr/*
-        SHELL
-
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc1ir2.vm.provision "shell",
+      inline: "yum -y install pcre-devel"
+    dc1ir2.vm.provision "shell",
+      inline: "yum -y install https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-10/CentOS-7-x86_64-Packages/libyang-0.16.111-0.x86_64.rpm"
+    dc1ir2.vm.provision "shell",
+      inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
+    dc1ir2.vm.provision "shell",
+      inline: "rm -f /etc/frr/*"
+    dc1ir2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
-
- end
 
 ###### Infrastructure servers
 
@@ -207,12 +203,11 @@ Vagrant.configure(2) do |config|
       vb.name = "dc2br1"
       vb.memory = 256
     end
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc2br1.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
-
- end
 
   config.vm.define "dc2br2" do |dc2br2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
@@ -225,52 +220,49 @@ Vagrant.configure(2) do |config|
       vb.name = "dc2br2"
       vb.memory = 256
     end
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc2br2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
 
- end
+###### DCI routers
 
-###### Backbone routers
-
-  config.vm.define "dc2bb1" do |dc2bb1|
+  config.vm.define "dc2dci1" do |dc2dci1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF000D"
-    dc2bb1.vm.network "private_network", ip: "10.2.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
-    dc2bb1.vm.network "private_network", ip: "10.12.0.6", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb1-dc2bb1"
-    dc2bb1.vm.network "private_network", ip: "10.12.0.13", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc2bb1-dc2bb2"
-    dc2bb1.vm.hostname = "dc2bb1"
-    dc2bb1.vm.provider :virtualbox do |vb|
-      vb.name = "dc2bb1"
+    dc2dci1.vm.network "private_network", ip: "10.2.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
+    dc2dci1.vm.network "private_network", ip: "10.12.0.6", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci1-dc2dci1"
+    dc2dci1.vm.network "private_network", ip: "10.12.0.13", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc2dci1-dc2dci2"
+    dc2dci1.vm.hostname = "dc2dci1"
+    dc2dci1.vm.provider :virtualbox do |vb|
+      vb.name = "dc2dci1"
       vb.memory = 256
     end
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc2dci1.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
 
- end
-
-  config.vm.define "dc2bb2" do |dc2bb2|
+  config.vm.define "dc2dci2" do |dc2dci2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF000E"
-    dc2bb2.vm.network "private_network", ip: "10.2.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
-    dc2bb2.vm.network "private_network", ip: "10.12.0.2", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb2-dc2bb2"
-    dc2bb2.vm.network "private_network", ip: "10.12.0.14", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc2bb1-dc2bb2"
-    dc2bb2.vm.hostname = "dc2bb2"
-    dc2bb2.vm.provider :virtualbox do |vb|
-      vb.name = "dc2bb2"
+    dc2dci2.vm.network "private_network", ip: "10.2.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
+    dc2dci2.vm.network "private_network", ip: "10.12.0.2", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci2-dc2dci2"
+    dc2dci2.vm.network "private_network", ip: "10.12.0.14", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc2dci1-dc2dci2"
+    dc2dci2.vm.hostname = "dc2dci2"
+    dc2dci2.vm.provider :virtualbox do |vb|
+      vb.name = "dc2dci2"
       vb.memory = 256
     end
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc2dci2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
-
-end
 
 ###### Infrastructure routers
 
@@ -284,19 +276,19 @@ end
       vb.name = "dc2ir1"
 	  vb.memory = 256
     end
-  config.vm.provision "shell", inline: <<-SHELL
-        yum install pcre-devel
-        yum -y install https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-10/CentOS-7-x86_64-Packages/libyang-0.16.111-0.x86_64.rpm
-        yum install -y https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm
-        rm -f /etc/frr/*
-        SHELL
-
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc2ir1.vm.provision "shell",
+      inline: "yum -y install pcre-devel"
+    dc2ir1.vm.provision "shell",
+      inline: "yum -y install https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-10/CentOS-7-x86_64-Packages/libyang-0.16.111-0.x86_64.rpm"
+    dc2ir1.vm.provision "shell",
+      inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
+    dc2ir1.vm.provision "shell",
+      inline: "rm -f /etc/frr/*"
+    dc2ir1.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
-
- end
 
   config.vm.define "dc2ir2" do |dc2ir2|
   config.vm.box = "centos/7"
@@ -308,19 +300,19 @@ end
       vb.name = "dc2ir2"
 	  vb.memory = 256
     end
-  config.vm.provision "shell", inline: <<-SHELL
-        yum install pcre-devel
-        yum -y install https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-10/CentOS-7-x86_64-Packages/libyang-0.16.111-0.x86_64.rpm
-        yum install -y https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm
-        rm -f /etc/frr/*
-        SHELL
-
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/routing.yml"
-    ansible.become = "true"
+    dc2ir2.vm.provision "shell",
+      inline: "yum -y install pcre-devel"
+    dc2ir2.vm.provision "shell",
+      inline: "yum -y install https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-10/CentOS-7-x86_64-Packages/libyang-0.16.111-0.x86_64.rpm"
+    dc2ir2.vm.provision "shell",
+      inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
+    dc2ir2.vm.provision "shell",
+      inline: "rm -f /etc/frr/*"
+    dc2ir2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
-
- end
 
 ###### Infrastructure servers
 
