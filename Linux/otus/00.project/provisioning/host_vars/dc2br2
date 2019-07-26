@@ -12,3 +12,17 @@ ospf:
 
 ### BGP ###
 bgpd: 'yes'
+my_asn: 65010
+bgp_neighbors:
+  - neighbor: 100.0.0.9
+    asn: 65002
+  - neighbor: 10.1.0.1
+    asn: 65010
+  - neighbor: 10.1.0.2
+    asn: 65010
+  - neighbor: 10.2.0.1
+    asn: 65010
+bgp_nlri:
+  - nlri: 100.0.0.0/8
+  - nlri: 100.2.0.0/16
+

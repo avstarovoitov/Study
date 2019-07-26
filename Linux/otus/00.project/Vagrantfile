@@ -16,6 +16,10 @@ Vagrant.configure(2) do |config|
       vb.name = "sp1br1"
       vb.memory = 256
     end
+    sp1br1.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
 
   config.vm.define "sp1br2" do |sp1br2|
@@ -28,6 +32,10 @@ Vagrant.configure(2) do |config|
     sp1br2.vm.provider :virtualbox do |vb|
       vb.name = "sp1br2"
       vb.memory = 256
+    end
+    sp1br2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
     end
   end
 
@@ -44,6 +52,10 @@ Vagrant.configure(2) do |config|
       vb.name = "sp2br1"
       vb.memory = 256
     end
+    sp2br1.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
+    end
   end
 
   config.vm.define "sp2br2" do |sp2br2|
@@ -56,6 +68,10 @@ Vagrant.configure(2) do |config|
     sp2br2.vm.provider :virtualbox do |vb|
       vb.name = "sp2br2"
       vb.memory = 256
+    end
+    sp2br2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/routing.yml"
+      ansible.become = "true"
     end
   end
 

@@ -14,11 +14,13 @@ router bgp {{ my_asn }}
  neighbor {{ neighbors.neighbor }} remote-as {{ neighbors.asn }}
  {% endfor %}
 !
+ {% if bgp_nlri != 'no'  %}
  address-family ipv4 unicast
   {% for nlris in bgp_nlri %}
   network {{ nlris.nlri }}
   {% endfor %}
  exit-address-family
+ {% endif %}
 {% endif %}
 !
 {% if ospfd == 'yes' %}

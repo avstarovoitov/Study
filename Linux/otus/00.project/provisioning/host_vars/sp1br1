@@ -8,3 +8,8 @@ ospfd: 'no'
 
 ### BGP ###
 bgpd: 'yes'
+my_asn: 65001
+bgp_neighbors:
+  - neighbor: 100.0.0.2
+    asn: 65010
+bgp_nlri: 'no'
