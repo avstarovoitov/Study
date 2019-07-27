@@ -1,0 +1,21 @@
+!
+router bgp {{ my_asn }}
+{% for ne in neighbors %}
+ neighbor {{ ne.neighbor }} remote-as {{ ne.asn }}
+{% endfor %}
+!
+ address-family ipv4 unicast
+{% for ne in neighbors %}
+{% if ne.asn == my_asn %}
+  neighbor {{ ne.neighbor }} next-hop-self
+{% endif %}
+{% endfor %}
+{% for net in nlri  %}
+  network {{ net.prefix }}
+{% endfor %}
+ exit-address-family
+!
+{% for net in nlri  %}
+ip route {{ net.prefix }} blackhole
+{% endfor %}
+

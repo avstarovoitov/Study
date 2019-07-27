@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0002"
     sp1br2.vm.network "private_network", ip: "172.16.0.2", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw1"
-    sp1br2.vm.network "private_network", ip: "100.0.0.13", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc2br2-sp1br2"
+    sp1br2.vm.network "private_network", ip: "100.0.0.13", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc2br1-sp1br2"
     sp1br2.vm.hostname = "sp1br2"
     sp1br2.vm.provider :virtualbox do |vb|
       vb.name = "sp1br2"
@@ -63,7 +63,7 @@ Vagrant.configure(2) do |config|
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0004"
     sp2br2.vm.network "private_network", ip: "172.16.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw1"
-    sp2br2.vm.network "private_network", ip: "100.0.0.9", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1br1-sp2br2"
+    sp2br2.vm.network "private_network", ip: "100.0.0.9", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc2br2-sp2br2"
     sp2br2.vm.hostname = "sp2br2"
     sp2br2.vm.provider :virtualbox do |vb|
       vb.name = "sp2br2"

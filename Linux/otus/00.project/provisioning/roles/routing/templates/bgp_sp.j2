@@ -1,0 +1,20 @@
+!
+router bgp {{ my_asn }}
+{% for ne in neighbors_client %}
+ neighbor {{ ne.neighbor }} remote-as {{ ne.asn }}
+{% endfor %}
+{% for ne in neighbors_sp %}
+ neighbor {{ ne.neighbor }} remote-as {{ ne.asn }}
+{% endfor %}
+!
+ address-family ipv4 unicast
+{% for ne in neighbors_client %}
+  neighbor {{ ne.neighbor }} default-originate
+{% endfor %}
+{% for ne in neighbors_sp %}
+{% if ne.asn == my_asn %}
+  neighbor {{ ne.neighbor }} next-hop-self
+{% endif %}
+{% endfor %}
+ exit-address-family
+
