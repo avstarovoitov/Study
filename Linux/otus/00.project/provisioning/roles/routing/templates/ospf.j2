@@ -1,0 +1,10 @@
+router ospf
+ ospf router-id {{ rid }}
+ log-adjacency-changes detail
+ auto-cost reference-bandwidth 10000
+{% for networks in ospf %}
+ network {{ networks.network }} area {{ networks.area }}
+{% endfor %}
+{% if ospf_role == 'border' %}
+ default-information originate
+{% endif %}

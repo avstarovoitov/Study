@@ -23,3 +23,5 @@ neighbors_sp:
     asn: 65001
   - neighbor: 172.16.0.3
     asn: 65002
+  - neighbor: 172.16.0.10
+    asn: 65003

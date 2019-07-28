@@ -1,0 +1,6 @@
+---
+# handlers file for dummy
+- name: restart network
+  systemd:
+    name: network
+    state: restarted

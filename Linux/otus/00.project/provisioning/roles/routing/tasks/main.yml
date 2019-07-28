@@ -9,13 +9,6 @@
     group: frr
   notify: restart routing
 
-#- name: 'Put daemons.conf to /etc/frr/'
-#  copy:
-#    src: daemons.conf
-#    dest: /etc/frr/
-#    owner: frr
-#    group: frr
-
 - name: 'Put frr.conf to /etc/frr/'
   template:
     src: frr.conf.j2
@@ -31,6 +24,14 @@
     owner: frr
     group: frrvty
  
+- name: 'Put bfdd.conf to /etc/frr/'
+  copy:
+    src: bfdd.conf
+    dest: /etc/frr/
+    owner: frr
+    group: frr
+  notify: restart routing
+
 - name: 'Starting routing daemon frr'
   systemd:
     name: frr

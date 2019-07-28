@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
     sp1br1.vm.network "private_network", ip: "100.0.0.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1br1-sp1br1"
     sp1br1.vm.hostname = "sp1br1"
     sp1br1.vm.provider :virtualbox do |vb|
-      vb.name = "sp1br1"
+      vb.name = "SP1-BR1"
       vb.memory = 256
     end
     sp1br1.vm.provision "ansible" do |ansible|
@@ -30,7 +30,7 @@ Vagrant.configure(2) do |config|
     sp1br2.vm.network "private_network", ip: "100.0.0.13", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc2br1-sp1br2"
     sp1br2.vm.hostname = "sp1br2"
     sp1br2.vm.provider :virtualbox do |vb|
-      vb.name = "sp1br2"
+      vb.name = "SP1-BR2"
       vb.memory = 256
     end
     sp1br2.vm.provision "ansible" do |ansible|
@@ -49,7 +49,7 @@ Vagrant.configure(2) do |config|
     sp2br1.vm.network "private_network", ip: "100.0.0.5", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1br2-sp2br1"
     sp2br1.vm.hostname = "sp2br1"
     sp2br1.vm.provider :virtualbox do |vb|
-      vb.name = "sp2br1"
+      vb.name = "SP2-BR1"
       vb.memory = 256
     end
     sp2br1.vm.provision "ansible" do |ansible|
@@ -66,7 +66,7 @@ Vagrant.configure(2) do |config|
     sp2br2.vm.network "private_network", ip: "100.0.0.9", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc2br2-sp2br2"
     sp2br2.vm.hostname = "sp2br2"
     sp2br2.vm.provider :virtualbox do |vb|
-      vb.name = "sp2br2"
+      vb.name = "SP2-BR2"
       vb.memory = 256
     end
     sp2br2.vm.provision "ansible" do |ansible|
@@ -87,7 +87,7 @@ Vagrant.configure(2) do |config|
     dc1br1.vm.network "private_network", ip: "10.1.0.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
     dc1br1.vm.hostname = "dc1br1"
     dc1br1.vm.provider :virtualbox do |vb|
-      vb.name = "dc1br1"
+      vb.name = "DC1-BR1"
       vb.memory = 256
     end
     dc1br1.vm.provision "shell",
@@ -106,7 +106,7 @@ Vagrant.configure(2) do |config|
     dc1br2.vm.network "private_network", ip: "10.1.0.2", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
     dc1br2.vm.hostname = "dc1br2"
     dc1br2.vm.provider :virtualbox do |vb|
-      vb.name = "dc1br2"
+      vb.name = "DC1-BR2"
       vb.memory = 256
     end
     dc1br2.vm.provision "shell",
@@ -119,41 +119,41 @@ Vagrant.configure(2) do |config|
 
 ###### DCI routers
 
-  config.vm.define "dc1dci1" do |dc1dci1|
+  config.vm.define "dc1bb1" do |dc1bb1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0007"
-    dc1dci1.vm.network "private_network", ip: "10.1.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
-    dc1dci1.vm.network "private_network", ip: "10.12.0.5", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci1-dc2dci1"
-    dc1dci1.vm.network "private_network", ip: "10.12.0.9", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci1-dc1dci2"
-    dc1dci1.vm.hostname = "dc1dci1"
-    dc1dci1.vm.provider :virtualbox do |vb|
-      vb.name = "dc1dci1"
+    dc1bb1.vm.network "private_network", ip: "10.1.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
+    dc1bb1.vm.network "private_network", ip: "10.12.0.5", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb1-dc2bb1"
+    dc1bb1.vm.network "private_network", ip: "10.12.0.9", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb1-dc1bb2"
+    dc1bb1.vm.hostname = "dc1bb1"
+    dc1bb1.vm.provider :virtualbox do |vb|
+      vb.name = "DC1-BB1"
       vb.memory = 256
     end
-    dc1dci1.vm.provision "shell",
+    dc1bb1.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
-    dc1dci1.vm.provision :ansible do |ansible|
+    dc1bb1.vm.provision :ansible do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
     end
   end
 
-  config.vm.define "dc1dci2" do |dc1dci2|
+  config.vm.define "dc1bb2" do |dc1bb2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF0008"
-    dc1dci2.vm.network "private_network", ip: "10.1.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
-    dc1dci2.vm.network "private_network", ip: "10.12.0.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci2-dc2dci2"
-    dc1dci2.vm.network "private_network", ip: "10.12.0.10", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci1-dc1dci2"
-    dc1dci2.vm.hostname = "dc1dci2"
-    dc1dci2.vm.provider :virtualbox do |vb|
-      vb.name = "dc1dci2"
+    dc1bb2.vm.network "private_network", ip: "10.1.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
+    dc1bb2.vm.network "private_network", ip: "10.12.0.1", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb2-dc2bb2"
+    dc1bb2.vm.network "private_network", ip: "10.12.0.10", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb1-dc1bb2"
+    dc1bb2.vm.hostname = "dc1bb2"
+    dc1bb2.vm.provider :virtualbox do |vb|
+      vb.name = "DC1-BB2"
       vb.memory = 256
     end
-    dc1dci2.vm.provision "shell",
+    dc1bb2.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
-    dc1dci2.vm.provision "ansible" do |ansible|
+    dc1bb2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
     end
@@ -166,9 +166,10 @@ Vagrant.configure(2) do |config|
   config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF0009"
     dc1ir1.vm.network "private_network", ip: "10.1.0.6", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
+    dc1ir1.vm.network "private_network", ip: "10.1.1.2", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw4"
     dc1ir1.vm.hostname = "dc1ir1"
     dc1ir1.vm.provider :virtualbox do |vb|
-      vb.name = "dc1ir1"
+      vb.name = "DC1-IR1"
 	  vb.memory = 256
     end
     dc1ir1.vm.provision "shell",
@@ -179,12 +180,20 @@ Vagrant.configure(2) do |config|
       inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
     dc1ir1.vm.provision "shell",
       inline: "rm -f /etc/frr/*"
-    dc1ir1.vm.provision "shell",
-      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc1ir1.vm.provision "ansible"  do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
     end
+    dc1ir1.vm.provision "ansible"  do |ansible|
+      ansible.playbook = "provisioning/dummy.yml"
+      ansible.become = "true"
+    end
+    dc1ir1.vm.provision "ansible"  do |ansible|
+      ansible.playbook = "provisioning/keepalived.yml"
+      ansible.become = "true"
+    end
+    dc1ir1.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
   end
 
   config.vm.define "dc1ir2" do |dc1ir2|
@@ -192,9 +201,10 @@ Vagrant.configure(2) do |config|
   config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF000A"
     dc1ir2.vm.network "private_network", ip: "10.1.0.5", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw2"
+    dc1ir2.vm.network "private_network", ip: "10.1.1.3", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw4"
     dc1ir2.vm.hostname = "dc1ir2"
     dc1ir2.vm.provider :virtualbox do |vb|
-      vb.name = "dc1ir2"
+      vb.name = "DC1-IR2"
 	  vb.memory = 256
     end
     dc1ir2.vm.provision "shell",
@@ -205,15 +215,56 @@ Vagrant.configure(2) do |config|
       inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
     dc1ir2.vm.provision "shell",
       inline: "rm -f /etc/frr/*"
-    dc1ir2.vm.provision "shell",
-      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc1ir2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
     end
+    dc1ir2.vm.provision "ansible"  do |ansible|
+      ansible.playbook = "provisioning/dummy.yml"
+      ansible.become = "true"
+    end
+    dc1ir2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/keepalived.yml"
+      ansible.become = "true"
+    end
+    dc1ir2.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
+
   end
 
 ###### Infrastructure servers
+
+  config.vm.define "dc1web" do |dc1web|
+  config.vm.box = "centos/7"
+  config.vm.box_version = "1905.1"
+  config.vm.base_mac = "DEADBEAF0020"
+    dc1web.vm.network "private_network", ip: "10.1.1.4", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw4"
+    dc1web.vm.hostname = "dc1web"
+    dc1web.vm.provider :virtualbox do |vb|
+      vb.name = "DC1-WEB"
+	  vb.memory = 256
+    end
+#    dc1web.vm.provision "shell",
+#      inline: "ip route del default via 10.0.2.2 dev eth0"
+#    dc1web.vm.provision "ansible" do |ansible|
+#      ansible.playbook = "provisioning/routing.yml"
+#      ansible.become = "true"
+#    end
+ end
+
+  config.vm.define "dc1db" do |dc1db|
+  config.vm.box = "centos/7"
+  config.vm.box_version = "1905.1"
+  config.vm.base_mac = "DEADBEAF0020"
+    dc1db.vm.network "private_network", ip: "10.1.1.5", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw4"
+    dc1db.vm.hostname = "dc1db"
+    dc1db.vm.provider :virtualbox do |vb|
+      vb.name = "DC1-DB"
+      vb.memory = 256
+    end
+
+  end
+
 
 
 ### Data Center 2
@@ -228,7 +279,7 @@ Vagrant.configure(2) do |config|
     dc2br1.vm.network "private_network", ip: "10.2.0.1", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
     dc2br1.vm.hostname = "dc2br1"
     dc2br1.vm.provider :virtualbox do |vb|
-      vb.name = "dc2br1"
+      vb.name = "DC2-BR1"
       vb.memory = 256
     end
     dc2br1.vm.provision "shell",
@@ -247,7 +298,7 @@ Vagrant.configure(2) do |config|
     dc2br2.vm.network "private_network", ip: "10.2.0.2", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
     dc2br2.vm.hostname = "dc2br2"
     dc2br2.vm.provider :virtualbox do |vb|
-      vb.name = "dc2br2"
+      vb.name = "DC2-BR2"
       vb.memory = 256
     end
     dc2br2.vm.provision "shell",
@@ -260,41 +311,41 @@ Vagrant.configure(2) do |config|
 
 ###### DCI routers
 
-  config.vm.define "dc2dci1" do |dc2dci1|
+  config.vm.define "dc2bb1" do |dc2bb1|
   config.vm.box = "CumulusCommunity/cumulus-vx"
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF000D"
-    dc2dci1.vm.network "private_network", ip: "10.2.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
-    dc2dci1.vm.network "private_network", ip: "10.12.0.6", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci1-dc2dci1"
-    dc2dci1.vm.network "private_network", ip: "10.12.0.13", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc2dci1-dc2dci2"
-    dc2dci1.vm.hostname = "dc2dci1"
-    dc2dci1.vm.provider :virtualbox do |vb|
-      vb.name = "dc2dci1"
+    dc2bb1.vm.network "private_network", ip: "10.2.0.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
+    dc2bb1.vm.network "private_network", ip: "10.12.0.6", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb1-dc2bb1"
+    dc2bb1.vm.network "private_network", ip: "10.12.0.13", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc2bb1-dc2bb2"
+    dc2bb1.vm.hostname = "dc2bb1"
+    dc2bb1.vm.provider :virtualbox do |vb|
+      vb.name = "DC2-BB1"
       vb.memory = 256
     end
-    dc2dci1.vm.provision "shell",
+    dc2bb1.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
-    dc2dci1.vm.provision "ansible" do |ansible|
+    dc2bb1.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
     end
   end
 
-  config.vm.define "dc2dci2" do |dc2dci2|
+  config.vm.define "dc2bb2" do |dc2bb2|
   config.vm.box = "CumulusCommunity/cumulus-vx"
   config.vm.box_version = "3.7.6"
   config.vm.base_mac = "DEADBEAF000E"
-    dc2dci2.vm.network "private_network", ip: "10.2.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
-    dc2dci2.vm.network "private_network", ip: "10.12.0.2", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1dci2-dc2dci2"
-    dc2dci2.vm.network "private_network", ip: "10.12.0.14", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc2dci1-dc2dci2"
-    dc2dci2.vm.hostname = "dc2dci2"
-    dc2dci2.vm.provider :virtualbox do |vb|
-      vb.name = "dc2dci2"
+    dc2bb2.vm.network "private_network", ip: "10.2.0.3", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
+    dc2bb2.vm.network "private_network", ip: "10.12.0.2", adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "dc1bb2-dc2bb2"
+    dc2bb2.vm.network "private_network", ip: "10.12.0.14", adapter: 4, netmask: "255.255.255.252", virtualbox__intnet: "dc2bb1-dc2bb2"
+    dc2bb2.vm.hostname = "dc2bb2"
+    dc2bb2.vm.provider :virtualbox do |vb|
+      vb.name = "DC2-BB2"
       vb.memory = 256
     end
-    dc2dci2.vm.provision "shell",
+    dc2bb2.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
-    dc2dci2.vm.provision "ansible" do |ansible|
+    dc2bb2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
     end
@@ -307,9 +358,10 @@ Vagrant.configure(2) do |config|
   config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF000F"
     dc2ir1.vm.network "private_network", ip: "10.2.0.6", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
+    dc2ir1.vm.network "private_network", ip: "10.2.1.2", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw5"
     dc2ir1.vm.hostname = "dc2ir1"
     dc2ir1.vm.provider :virtualbox do |vb|
-      vb.name = "dc2ir1"
+      vb.name = "DC2-IR1"
 	  vb.memory = 256
     end
     dc2ir1.vm.provision "shell",
@@ -320,22 +372,27 @@ Vagrant.configure(2) do |config|
       inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
     dc2ir1.vm.provision "shell",
       inline: "rm -f /etc/frr/*"
-    dc2ir1.vm.provision "shell",
-      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc2ir1.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
     end
-  end
+    dc2ir1.vm.provision "ansible"  do |ansible|
+      ansible.playbook = "provisioning/dummy.yml"
+      ansible.become = "true"
+    end
+    dc2ir1.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
+ end
 
   config.vm.define "dc2ir2" do |dc2ir2|
   config.vm.box = "centos/7"
   config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF0010"
     dc2ir2.vm.network "private_network", ip: "10.2.0.5", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw3"
+    dc2ir2.vm.network "private_network", ip: "10.2.1.3", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw5"
     dc2ir2.vm.hostname = "dc2ir2"
     dc2ir2.vm.provider :virtualbox do |vb|
-      vb.name = "dc2ir2"
+      vb.name = "DC2-IR2"
 	  vb.memory = 256
     end
     dc2ir2.vm.provision "shell",
@@ -346,25 +403,29 @@ Vagrant.configure(2) do |config|
       inline: "yum -y install https://github.com/FRRouting/frr/releases/download/frr-7.0/frr-7.0-01.el7.centos.x86_64.rpm"
     dc2ir2.vm.provision "shell",
       inline: "rm -f /etc/frr/*"
-    dc2ir2.vm.provision "shell",
-      inline: "ip route del default via 10.0.2.2 dev eth0"
     dc2ir2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
       ansible.become = "true"
     end
+    dc2ir2.vm.provision "ansible"  do |ansible|
+      ansible.playbook = "provisioning/dummy.yml"
+      ansible.become = "true"
+    end
+    dc2ir2.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
   end
 
 ###### Infrastructure servers
 
 
-### Management
+### Clients
 
-#  config.vm.define "MASTER" do |master|
+#  config.vm.define "client" do |client|
 #  config.vm.box = "centos/7"
 #  config.vm.base_mac = "DEADBEAFAAAA"
-#    master.vm.hostname = "MASTER"
+#    master.vm.hostname = "client"
 #    master.vm.provider :virtualbox do |vb|
-#      vb.name = "MASTER"
+#      vb.name = "Client"
 #      vb.memory = 512
 #    end
 # 

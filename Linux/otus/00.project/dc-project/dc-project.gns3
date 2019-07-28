@@ -19,9 +19,9 @@
             {
                 "drawing_id": "7cb4afdc-4ded-4a0d-9084-9e4927b60205",
                 "rotation": 0,
-                "svg": "<svg height=\"345\" width=\"2545\"><rect fill=\"#e9b96e\" fill-opacity=\"1.0\" height=\"345\" stroke=\"#000000\" stroke-width=\"2\" width=\"2545\" /></svg>",
-                "x": -1273,
-                "y": -539,
+                "svg": "<svg height=\"406\" width=\"2545\"><rect fill=\"#e9b96e\" fill-opacity=\"1.0\" height=\"406\" stroke=\"#000000\" stroke-width=\"2\" width=\"2545\" /></svg>",
+                "x": -1278,
+                "y": -598,
                 "z": -2
             },
             {
@@ -268,8 +268,8 @@
                 "drawing_id": "ec11695f-762f-483f-8ebe-b0307e118f58",
                 "rotation": 0,
                 "svg": "<svg height=\"28\" width=\"107\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"Cantarell\" font-size=\"12.0\" font-weight=\"bold\">172.16.0.0/24</text></svg>",
-                "x": -52,
-                "y": -335,
+                "x": -54,
+                "y": -321,
                 "z": -1
             },
             {
@@ -398,6 +398,14 @@
                 "svg": "<svg height=\"28\" width=\"29\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"Cantarell\" font-size=\"12.0\" font-weight=\"bold\">.14</text></svg>",
                 "x": 206,
                 "y": 372,
+                "z": -1
+            },
+            {
+                "drawing_id": "82d8d3c5-190b-4cf0-96e2-ea9f8120f3d9",
+                "rotation": 0,
+                "svg": "<svg height=\"28\" width=\"30\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"Cantarell\" font-size=\"12.0\" font-weight=\"bold\">.10</text></svg>",
+                "x": 6,
+                "y": -486,
                 "z": -1
             }
         ],
@@ -1145,6 +1153,37 @@
                     }
                 ],
                 "suspend": false
+            },
+            {
+                "filters": {},
+                "link_id": "e15fefce-c5ee-422a-a0ce-883fa1cde149",
+                "nodes": [
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: Cantarell;font-size: 12.0;fill: #000000;fill-opacity: 1.0;",
+                            "text": "e5",
+                            "x": 32,
+                            "y": -9
+                        },
+                        "node_id": "82c08cb3-1f4b-4646-988f-bd82e68b3aa2",
+                        "port_number": 5
+                    },
+                    {
+                        "adapter_number": 1,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: Cantarell;font-size: 12.0;fill: #000000;fill-opacity: 1.0;",
+                            "text": "e1",
+                            "x": 47,
+                            "y": 89
+                        },
+                        "node_id": "6aabe0ce-5a10-40bf-a729-2fce8686d0dc",
+                        "port_number": 0
+                    }
+                ],
+                "suspend": false
             }
         ],
         "nodes": [
@@ -1701,11 +1740,11 @@
                 "label": {
                     "rotation": 0,
                     "style": "font-family: Cantarell;font-size: 12.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
-                    "text": "Sw1",
-                    "x": 35,
-                    "y": 50
+                    "text": "Internet",
+                    "x": 7,
+                    "y": 73
                 },
-                "name": "Sw1",
+                "name": "Internet",
                 "node_id": "82c08cb3-1f4b-4646-988f-bd82e68b3aa2",
                 "node_type": "ethernet_switch",
                 "port_name_format": "Ethernet{0}",
@@ -1770,7 +1809,7 @@
                         }
                     ]
                 },
-                "symbol": "sq_switch_blue.svg",
+                "symbol": "c_interconnect_blue.svg",
                 "width": 300,
                 "x": -40,
                 "y": -415,
@@ -1942,6 +1981,40 @@
                 "width": 300,
                 "x": 335,
                 "y": 185,
+                "z": -1
+            },
+            {
+                "compute_id": "local",
+                "console": 5019,
+                "console_type": "telnet",
+                "first_port_name": "",
+                "height": 300,
+                "label": {
+                    "rotation": 0,
+                    "style": "font-family: Cantarell;font-size: 12.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                    "text": "Client",
+                    "x": 14,
+                    "y": -25
+                },
+                "name": "Client",
+                "node_id": "6aabe0ce-5a10-40bf-a729-2fce8686d0dc",
+                "node_type": "virtualbox",
+                "port_name_format": "Ethernet{0}",
+                "port_segment_size": 0,
+                "properties": {
+                    "acpi_shutdown": false,
+                    "adapter_type": "Intel PRO/1000 MT Desktop (82540EM)",
+                    "adapters": 2,
+                    "headless": false,
+                    "linked_clone": false,
+                    "ram": 512,
+                    "use_any_adapter": false,
+                    "vmname": "Client"
+                },
+                "symbol": "sq_client_blue.svg",
+                "width": 300,
+                "x": -40,
+                "y": -565,
                 "z": -1
             }
         ]

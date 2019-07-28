@@ -2,9 +2,11 @@
 router bgp {{ my_asn }}
 {% for ne in neighbors_client %}
  neighbor {{ ne.neighbor }} remote-as {{ ne.asn }}
+ neighbor {{ ne.neighbor }} bfd
 {% endfor %}
 {% for ne in neighbors_sp %}
  neighbor {{ ne.neighbor }} remote-as {{ ne.asn }}
+ neighbor {{ ne.neighbor }} bfd
 {% endfor %}
 !
  address-family ipv4 unicast

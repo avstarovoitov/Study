@@ -1,0 +1,66 @@
+global_defs {
+
+   notification_email {
+       admin@example.com
+   }
+   notification_email_from noreply@example.com
+   smtp_server 127.0.0.1
+   smtp_connect_timeout 60
+}
+
+vrrp_sync_group VG1 {
+   group {
+      PUBLIC
+      LOCAL
+   }
+   notify_master "/etc/keepalived/dummy_up.sh"
+   notify_backup "/etc/keepalived/dummy_down.sh"
+   notify_fault  "/etc/keepalived/dummy_down.sh"
+}
+
+### Config for public interface ###
+
+vrrp_instance PUBLIC {
+    state {{ vrrp_role }}
+    interface {{ vrrp_interface_public }}
+    virtual_router_id {{ vrrp_rid }}
+    priority {{ vrrp_priority }}
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass {{ vrrp_password }}
+    }
+}
+
+### Config for local interface ###
+
+vrrp_instance LOCAL {
+    state {{ vrrp_role }}
+    interface {{ vrrp_interface_local }}
+    virtual_router_id {{ vrrp_rid }}
+    priority {{ vrrp_priority }}
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass {{ vrrp_password }}
+    }
+    virtual_ipaddress {
+    {{ vrrp_ip_local_vip }}
+    }
+    nopreempt
+}
+
+### Config for nodes ###
+
+virtual_server {{ ipvs_ip_vip_httpd }} {{ ipvs_port_vip_httpd }} {
+    delay_loop 6
+    lb_algo rr
+    lb_kind NAT
+    protocol TCP
+
+    real_server {{ real_node_ip }} {{ real_port }} {
+        TCP_CHECK {
+                connect_timeout 10
+        }
+    }
+}

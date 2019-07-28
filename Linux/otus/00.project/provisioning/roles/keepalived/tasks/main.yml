@@ -1,0 +1,32 @@
+---
+# tasks file for keepalived
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: 'Installing keepalived and ipvsadm'
+  yum:
+    name: ['keepalived', 'ipvsadm']
+    state: latest
+
+- name: 'Congiguring keepalived'
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+  notify: keepalived restart
+
+- name: 'Copy scripts'
+  copy:
+    src: "{{ item }}"
+    dest: /etc/keepalived/
+    mode: 0755
+  loop:
+    - dummy_up.sh
+    - dummy_down.sh  
+
+- name: 'Starting keepalived'
+  systemd:
+    name: keepalived
+    state: started
+    enabled: yes

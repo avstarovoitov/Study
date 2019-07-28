@@ -5,10 +5,13 @@ hostname: dc2ir1
 
 ### OSPF ###
 ospfd: 'yes'
+ospf_role: 'infrastructure'
 rid: 2.0.0.6
 ospf:
   - network: 10.2.0.0/24
     area: 2
+  - network: 100.0.0.0/24
+    area: 1
 
 ### BGP ###
 bgpd: 'no'

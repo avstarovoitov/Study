@@ -1,0 +1,21 @@
+---
+# tasks file for database
+- name: 'Put /etc/environment'
+  copy:
+    src: environment
+    dest: /etc/environment
+    group: root
+    owner: root
+    mode: 0644
+
+- name: 'Install mariadb-server'
+  yum:
+    name: mariadb-server
+    state: latest
+
+- name: 'Start mariadb-server'
+  systemd:
+    name: mariadb-server
+    state: started
+    enabled: yes
+

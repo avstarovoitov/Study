@@ -1,10 +1,11 @@
 ---
 
 ### Base ###
-hostname: dc2dci2
+hostname: dc2bb2
 
 ### OSPF ###
 ospfd: 'yes'
+ospf_role: 'dci'
 rid: 2.0.0.3
 ospf:
   - network: 10.2.0.0/24

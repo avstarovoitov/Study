@@ -5,10 +5,30 @@ hostname: dc1ir1
 
 ### OSPF ###
 ospfd: 'yes'
+ospf_role: 'infrastructure'
 rid: 1.0.0.6
 ospf:
   - network: 10.1.0.0/24
     area: 1
+  - network: 100.0.0.0/24
+    area: 1
 
 ### BGP ###
 bgpd: 'no'
+
+### Keepalivd ###
+vrrp_role: BACKUP
+vrrp_interface_public: eth1
+vrrp_interface_local: eth2
+vrrp_rid: 50
+vrrp_priority: 100
+vrrp_password: vrrp_password
+vrrp_ip_public_vip: 100.0.0.100
+vrrp_ip_local_vip: 10.1.1.1
+
+### ipvs pat in keepalived ###
+ipvs_ip_vip_httpd: 100.0.0.100
+ipvs_port_vip_httpd: 80
+real_node_ip: 10.1.1.4
+real_port: 80
+

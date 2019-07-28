@@ -1,0 +1,40 @@
+---
+# tasks file for web-srv
+- name: 'Put /etc/environment'
+  copy:
+    src: environment
+    dest: /etc/environment
+    group: root
+    owner: root
+    mode: 0644
+
+- name: 'Install epel-release'
+  yum:
+    name: epel-release
+    state: latest
+
+- name: 'Install PHP'
+  yum:
+    name: ['php php-cli', 'php-gd', 'php-common', 'php-ldap', 'php-pdo', 'php-pear', 'php-snmp', 'php-xml', 'php-fpm']
+    state: latest
+
+- name: 'Install nginx'
+  yum:
+    name: nginx
+    state: latest
+
+- name: 'Put nginx config'
+  copy:
+    src: phpipam.conf
+    dest: /etc/nginx/conf.d/phpipam.conf
+    group: root
+    owner: root
+    mode: 0644
+
+- name: 'Install git'
+  yum:
+    name: git
+    state: latest
+
+#- name: 'Install phpipam'
+#  shell: 'git clone https://github.com/phpipam/phpipam.git /var/www/html/'

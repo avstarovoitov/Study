@@ -5,6 +5,7 @@ hostname: dc2br1
 
 ### OSPF ###
 ospfd: 'yes'
+ospf_role: 'border'
 rid: 2.0.0.1
 ospf:
   - network: 10.2.0.0/24

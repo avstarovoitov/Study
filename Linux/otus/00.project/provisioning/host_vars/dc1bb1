@@ -1,10 +1,11 @@
 ---
 
 ### Base ###
-hostname: dc1dci1
+hostname: dc1bb1
 
 ### OSPF ###
 ospfd: 'yes'
+ospf_role: 'dci'
 rid: 1.0.0.4
 ospf:
   - network: 10.1.0.0/24

@@ -2,12 +2,17 @@
 router bgp {{ my_asn }}
 {% for ne in neighbors %}
  neighbor {{ ne.neighbor }} remote-as {{ ne.asn }}
+{% if ne.asn != my_asn %}
+ neighbor {{ ne.neighbor }} bfd
+{% endif %}
 {% endfor %}
 !
  address-family ipv4 unicast
 {% for ne in neighbors %}
 {% if ne.asn == my_asn %}
   neighbor {{ ne.neighbor }} next-hop-self
+{% else %}
+  neighbor {{ ne.neighbor }} route-map BGP_OUT out
 {% endif %}
 {% endfor %}
 {% for net in nlri  %}
@@ -17,5 +22,9 @@ router bgp {{ my_asn }}
 !
 {% for net in nlri  %}
 ip route {{ net.prefix }} blackhole
+ip prefix-list BGP_OUT permit {{ net.prefix }}
 {% endfor %}
+!
+route-map BGP_OUT permit 10
+ match ip address prefix-list BGP_OUT
 

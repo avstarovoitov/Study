@@ -17,13 +17,7 @@ log syslog informational
 {% endif %}
 !
 {% if ospfd == 'yes' %}
-router ospf
- ospf router-id {{ rid }}
- log-adjacency-changes detail
- auto-cost reference-bandwidth 10000
- {% for networks in ospf %}
- network {{ networks.network }} area {{ networks.area }}
- {% endfor %}
+{% include 'ospf.j2' %}
 {% endif %}
 line vty
 !
