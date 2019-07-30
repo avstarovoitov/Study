@@ -1,5 +1,10 @@
 ---
 # tasks file for web-srv
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+
 - name: 'Put /etc/environment'
   copy:
     src: environment
@@ -8,33 +13,60 @@
     owner: root
     mode: 0644
 
-- name: 'Install epel-release'
+- name: 'Install epel-release and vim'
   yum:
-    name: epel-release
+    name: ['epel-release', 'vim']
     state: latest
 
 - name: 'Install PHP'
   yum:
-    name: ['php php-cli', 'php-gd', 'php-common', 'php-ldap', 'php-pdo', 'php-pear', 'php-snmp', 'php-xml', 'php-fpm']
+    name: ['php', 'php-cli', 'php-gd', 'php-common', 'php-ldap', 'php-pdo', 'php-pear', 'php-snmp', 'php-xml', 'php-mysql', 'php-mbstring', 'php-fpm']
     state: latest
 
-- name: 'Install nginx'
+- name: 'Install Apache'
   yum:
-    name: nginx
+    name: httpd
     state: latest
 
-- name: 'Put nginx config'
+- name: 'Put httpd.conf config'
   copy:
-    src: phpipam.conf
-    dest: /etc/nginx/conf.d/phpipam.conf
+    src: httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
     group: root
     owner: root
     mode: 0644
+
+- name: 'Set timezone for PHP'
+  shell: "echo 'date.timezone = Europe/Moscow' >> /etc/php.ini"
+
+- name: 'Start httpd'
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
+
 
 - name: 'Install git'
   yum:
     name: git
     state: latest
 
-#- name: 'Install phpipam'
-#  shell: 'git clone https://github.com/phpipam/phpipam.git /var/www/html/'
+- name: 'Install phpipam'
+  git:
+    repo: https://github.com/phpipam/phpipam.git
+    dest: /var/www/html/
+    version: '1.4'
+
+- name: 'Put priv.sh to /root/'
+  copy:
+    src: priv.sh
+    dest: /root/
+    mode: 0755
+
+- name: 'Set privileges for /var/www/html'
+  shell: 'bash /root/priv.sh'
+
+- name: 'Put config.php'
+  copy:
+    src: config.php
+    dest: /var/www/html/

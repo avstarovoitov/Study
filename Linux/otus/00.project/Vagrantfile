@@ -242,14 +242,14 @@ Vagrant.configure(2) do |config|
     dc1web.vm.hostname = "dc1web"
     dc1web.vm.provider :virtualbox do |vb|
       vb.name = "DC1-WEB"
-	  vb.memory = 256
+	  vb.memory = 512
+    end
+    dc1web.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/web-srv.yml"
+      ansible.become = "true"
     end
 #    dc1web.vm.provision "shell",
 #      inline: "ip route del default via 10.0.2.2 dev eth0"
-#    dc1web.vm.provision "ansible" do |ansible|
-#      ansible.playbook = "provisioning/routing.yml"
-#      ansible.become = "true"
-#    end
  end
 
   config.vm.define "dc1db" do |dc1db|
@@ -260,9 +260,14 @@ Vagrant.configure(2) do |config|
     dc1db.vm.hostname = "dc1db"
     dc1db.vm.provider :virtualbox do |vb|
       vb.name = "DC1-DB"
-      vb.memory = 256
+      vb.memory = 512
     end
-
+    dc1db.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/database.yml"
+      ansible.become = "true"
+    end
+#    dc1db.vm.provision "shell",
+#      inline: "ip route del default via 10.0.2.2 dev eth0"
   end
 
 

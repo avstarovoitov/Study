@@ -1,5 +1,10 @@
 ---
 # tasks file for database
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+ 
 - name: 'Put /etc/environment'
   copy:
     src: environment
@@ -10,12 +15,19 @@
 
 - name: 'Install mariadb-server'
   yum:
-    name: mariadb-server
+    name: ['mariadb-server', 'MySQL-python']
     state: latest
 
 - name: 'Start mariadb-server'
   systemd:
-    name: mariadb-server
+    name: mariadb
     state: started
     enabled: yes
 
+- name: 'Set mysql root pass'
+  mysql_user:
+      login_user: root
+      login_password: ''
+      user: root
+      host_all: yes
+      password: 'P@ssw0rd'
