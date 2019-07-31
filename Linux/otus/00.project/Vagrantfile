@@ -14,7 +14,7 @@ Vagrant.configure(2) do |config|
     sp1br1.vm.hostname = "sp1br1"
     sp1br1.vm.provider :virtualbox do |vb|
       vb.name = "SP1-BR1"
-      vb.memory = 256
+      vb.memory = 512
     end
     sp1br1.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
@@ -31,7 +31,7 @@ Vagrant.configure(2) do |config|
     sp1br2.vm.hostname = "sp1br2"
     sp1br2.vm.provider :virtualbox do |vb|
       vb.name = "SP1-BR2"
-      vb.memory = 256
+      vb.memory = 512
     end
     sp1br2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
@@ -50,7 +50,7 @@ Vagrant.configure(2) do |config|
     sp2br1.vm.hostname = "sp2br1"
     sp2br1.vm.provider :virtualbox do |vb|
       vb.name = "SP2-BR1"
-      vb.memory = 256
+      vb.memory = 512
     end
     sp2br1.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
@@ -67,7 +67,7 @@ Vagrant.configure(2) do |config|
     sp2br2.vm.hostname = "sp2br2"
     sp2br2.vm.provider :virtualbox do |vb|
       vb.name = "SP2-BR2"
-      vb.memory = 256
+      vb.memory = 512
     end
     sp2br2.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/routing.yml"
@@ -88,7 +88,7 @@ Vagrant.configure(2) do |config|
     dc1br1.vm.hostname = "dc1br1"
     dc1br1.vm.provider :virtualbox do |vb|
       vb.name = "DC1-BR1"
-      vb.memory = 256
+      vb.memory = 512
     end
     dc1br1.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
@@ -107,7 +107,7 @@ Vagrant.configure(2) do |config|
     dc1br2.vm.hostname = "dc1br2"
     dc1br2.vm.provider :virtualbox do |vb|
       vb.name = "DC1-BR2"
-      vb.memory = 256
+      vb.memory = 512
     end
     dc1br2.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
@@ -239,36 +239,36 @@ Vagrant.configure(2) do |config|
   config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF0020"
   config.vm.network  "forwarded_port", guest: 80, host: 8080, auto_correct: true
-    dc1web.vm.network "private_network", ip: "10.1.1.4", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw4"
+    dc1web.vm.network "private_network", ip: "10.1.1.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw4"
     dc1web.vm.hostname = "dc1web"
     dc1web.vm.provider :virtualbox do |vb|
       vb.name = "DC1-WEB"
-	  vb.memory = 512
+	  vb.memory = 256
     end
     dc1web.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/web-srv.yml"
       ansible.become = "true"
     end
-#    dc1web.vm.provision "shell",
-#      inline: "ip route del default via 10.0.2.2 dev eth0"
+    dc1web.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
  end
 
   config.vm.define "dc1db" do |dc1db|
   config.vm.box = "centos/7"
   config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF0020"
-    dc1db.vm.network "private_network", ip: "10.1.1.5", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw4"
+    dc1db.vm.network "private_network", ip: "10.1.1.5", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw4"
     dc1db.vm.hostname = "dc1db"
     dc1db.vm.provider :virtualbox do |vb|
       vb.name = "DC1-DB"
-      vb.memory = 512
+      vb.memory = 256
     end
     dc1db.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/database.yml"
       ansible.become = "true"
     end
-#    dc1db.vm.provision "shell",
-#      inline: "ip route del default via 10.0.2.2 dev eth0"
+    dc1db.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
   end
 
 
@@ -286,7 +286,7 @@ Vagrant.configure(2) do |config|
     dc2br1.vm.hostname = "dc2br1"
     dc2br1.vm.provider :virtualbox do |vb|
       vb.name = "DC2-BR1"
-      vb.memory = 256
+      vb.memory = 512
     end
     dc2br1.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
@@ -305,7 +305,7 @@ Vagrant.configure(2) do |config|
     dc2br2.vm.hostname = "dc2br2"
     dc2br2.vm.provider :virtualbox do |vb|
       vb.name = "DC2-BR2"
-      vb.memory = 256
+      vb.memory = 512
     end
     dc2br2.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
@@ -386,6 +386,10 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "provisioning/dummy.yml"
       ansible.become = "true"
     end
+    dc2ir1.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/keepalived.yml"
+      ansible.become = "true"
+    end
     dc2ir1.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
  end
@@ -417,29 +421,32 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "provisioning/dummy.yml"
       ansible.become = "true"
     end
+    dc2ir2.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/keepalived.yml"
+      ansible.become = "true"
+    end
     dc2ir2.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
   end
 
 ###### Infrastructure servers
 
-
-### Clients
-
-#  config.vm.define "client" do |client|
-#  config.vm.box = "centos/7"
-#  config.vm.base_mac = "DEADBEAFAAAA"
-#    master.vm.hostname = "client"
-#    master.vm.provider :virtualbox do |vb|
-#      vb.name = "Client"
-#      vb.memory = 512
-#    end
-# 
-#  config.vm.provision "ansible" do |ansible|
-#    ansible.playbook = "provisioning/master.yml"
-#    ansible.become = "true"
-#  end
-#
-#  end
+  config.vm.define "dc2web" do |dc2web|
+  config.vm.box = "centos/7"
+  config.vm.box_version = "1905.1"
+  config.vm.base_mac = "DEADBEAF0022"
+    dc2web.vm.network "private_network", ip: "10.2.1.4", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw5"
+    dc2web.vm.hostname = "dc2web"
+    dc2web.vm.provider :virtualbox do |vb|
+      vb.name = "DC2-WEB"
+      vb.memory = 256
+    end
+    dc2web.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/web-srv.yml"
+      ansible.become = "true"
+    end
+    dc2web.vm.provision "shell",
+      inline: "ip route del default via 10.0.2.2 dev eth0"
+ end
 
 end

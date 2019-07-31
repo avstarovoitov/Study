@@ -29,4 +29,4 @@ neighbors:
 
 nlri:
   - prefix: 100.0.0.0/8
-  - prefix: 100.1.0.0/16
+  - prefix: 100.1.0.0/24

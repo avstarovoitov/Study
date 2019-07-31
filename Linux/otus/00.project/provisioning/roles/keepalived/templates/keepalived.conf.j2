@@ -26,6 +26,7 @@ vrrp_instance PUBLIC {
     virtual_router_id {{ vrrp_rid }}
     priority {{ vrrp_priority }}
     advert_int 1
+    nopreempt
     authentication {
         auth_type PASS
         auth_pass {{ vrrp_password }}
@@ -40,6 +41,7 @@ vrrp_instance LOCAL {
     virtual_router_id {{ vrrp_rid }}
     priority {{ vrrp_priority }}
     advert_int 1
+    nopreempt
     authentication {
         auth_type PASS
         auth_pass {{ vrrp_password }}
@@ -47,7 +49,6 @@ vrrp_instance LOCAL {
     virtual_ipaddress {
     {{ vrrp_ip_local_vip }}
     }
-    nopreempt
 }
 
 ### Config for nodes ###

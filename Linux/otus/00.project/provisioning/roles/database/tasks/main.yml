@@ -31,3 +31,6 @@
       user: root
       host_all: yes
       password: 'P@ssw0rd'
+
+- name: 'Enable access to db from network'
+  shell: mysql -u root -pP@ssw0rd -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'P@ssw0rd' WITH GRANT OPTION;"

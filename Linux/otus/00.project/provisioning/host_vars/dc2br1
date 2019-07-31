@@ -28,4 +28,4 @@ neighbors:
     asn: 65010
 nlri:
   - prefix: 100.0.0.0/8
-  - prefix: 100.2.0.0/16
+  - prefix: 100.2.0.0/24
