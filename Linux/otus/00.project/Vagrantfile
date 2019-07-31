@@ -238,6 +238,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
   config.vm.box_version = "1905.1"
   config.vm.base_mac = "DEADBEAF0020"
+  config.vm.network  "forwarded_port", guest: 80, host: 8080, auto_correct: true
     dc1web.vm.network "private_network", ip: "10.1.1.4", adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "sw4"
     dc1web.vm.hostname = "dc1web"
     dc1web.vm.provider :virtualbox do |vb|

@@ -4,8 +4,8 @@
  * database connection details
  ******************************/
 $db['host'] = '10.1.1.5';
-$db['user'] = 'phpipam';
-$db['pass'] = 'phpipamadmin';
+$db['user'] = 'root';
+$db['pass'] = 'P@ssw0rd';
 $db['name'] = 'phpipam';
 $db['port'] = 3306;
 
