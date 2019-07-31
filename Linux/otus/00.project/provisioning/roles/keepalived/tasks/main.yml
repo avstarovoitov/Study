@@ -24,6 +24,8 @@
   loop:
     - dummy_up.sh
     - dummy_down.sh  
+    - ip_add.sh
+    - ip_del.sh
 
 - name: 'Starting keepalived'
   systemd:

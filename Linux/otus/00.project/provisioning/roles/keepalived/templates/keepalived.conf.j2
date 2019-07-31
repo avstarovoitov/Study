@@ -57,6 +57,10 @@ virtual_server {{ ipvs_ip_vip_httpd }} {{ ipvs_port_vip_httpd }} {
     lb_algo rr
     lb_kind NAT
     protocol TCP
+    alpha
+    omega
+    quorum_up   "/etc/keepalived/ip_add.sh {{ ipvs_ip_vip_httpd }}"
+    quorum_down "/etc/keepalived/ip_del.sh {{ ipvs_ip_vip_httpd }}"
 
     real_server {{ real_node_ip }} {{ real_port }} {
         TCP_CHECK {
