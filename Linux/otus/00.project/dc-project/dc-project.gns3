@@ -1399,37 +1399,6 @@
             },
             {
                 "filters": {},
-                "link_id": "4239b1c0-a010-464e-89d3-93640dc79005",
-                "nodes": [
-                    {
-                        "adapter_number": 0,
-                        "label": {
-                            "rotation": 0,
-                            "style": "font-family: Cantarell;font-size: 12.0;fill: #000000;fill-opacity: 1.0;",
-                            "text": "e2",
-                            "x": -10,
-                            "y": 40
-                        },
-                        "node_id": "db2c9b95-15e6-432f-afdb-db923e9d5eda",
-                        "port_number": 2
-                    },
-                    {
-                        "adapter_number": 1,
-                        "label": {
-                            "rotation": 0,
-                            "style": "font-family: Cantarell;font-size: 12.0;fill: #000000;fill-opacity: 1.0;",
-                            "text": "Eth1",
-                            "x": 80,
-                            "y": 40
-                        },
-                        "node_id": "22a0caa7-a91e-4a1e-8883-c4a7c7cd1ee6",
-                        "port_number": 0
-                    }
-                ],
-                "suspend": false
-            },
-            {
-                "filters": {},
                 "link_id": "d4f4e08d-ffe7-489b-b233-b27f1b913a00",
                 "nodes": [
                     {
@@ -1485,6 +1454,37 @@
                             "y": 40
                         },
                         "node_id": "1f6744bb-2fbb-4013-949e-bc81e74abdf1",
+                        "port_number": 0
+                    }
+                ],
+                "suspend": false
+            },
+            {
+                "filters": {},
+                "link_id": "024d3672-a888-4850-bd32-df6dfdfa2dbe",
+                "nodes": [
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: Cantarell;font-size: 12.0;fill: #000000;fill-opacity: 1.0;",
+                            "text": "e2",
+                            "x": -10,
+                            "y": 40
+                        },
+                        "node_id": "db2c9b95-15e6-432f-afdb-db923e9d5eda",
+                        "port_number": 2
+                    },
+                    {
+                        "adapter_number": 1,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: Cantarell;font-size: 12.0;fill: #000000;fill-opacity: 1.0;",
+                            "text": "Eth1",
+                            "x": 80,
+                            "y": 40
+                        },
+                        "node_id": "22a0caa7-a91e-4a1e-8883-c4a7c7cd1ee6",
                         "port_number": 0
                     }
                 ],
@@ -1550,7 +1550,7 @@
                     "adapters": 4,
                     "headless": true,
                     "linked_clone": false,
-                    "ram": 256,
+                    "ram": 512,
                     "use_any_adapter": true,
                     "vmname": "SP1-BR2"
                 },
@@ -1618,7 +1618,7 @@
                     "adapters": 4,
                     "headless": true,
                     "linked_clone": false,
-                    "ram": 256,
+                    "ram": 512,
                     "use_any_adapter": true,
                     "vmname": "SP2-BR2"
                 },
@@ -1720,7 +1720,7 @@
                     "adapters": 4,
                     "headless": true,
                     "linked_clone": false,
-                    "ram": 256,
+                    "ram": 512,
                     "use_any_adapter": true,
                     "vmname": "DC2-BR1"
                 },
@@ -1754,7 +1754,7 @@
                     "adapters": 4,
                     "headless": true,
                     "linked_clone": false,
-                    "ram": 256,
+                    "ram": 512,
                     "use_any_adapter": true,
                     "vmname": "DC2-BR2"
                 },
@@ -2483,7 +2483,7 @@
                 "properties": {
                     "acpi_shutdown": false,
                     "adapter_type": "Intel PRO/1000 MT Desktop (82540EM)",
-                    "adapters": 3,
+                    "adapters": 2,
                     "headless": true,
                     "linked_clone": false,
                     "ram": 256,

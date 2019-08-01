@@ -6,7 +6,7 @@ ospfd: 'yes'
 ospf_role: 'infrastructure'
 rid: 1.0.0.5
 ospf:
-  - network: 10.1.0.0/24
+  - network: 10.0.0.0/8
     area: 1
   - network: 100.1.0.0/24
     area: 1
