@@ -267,8 +267,8 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "provisioning/database.yml"
       ansible.become = "true"
     end
-    dc1db.vm.provision "shell",
-      inline: "ip route del default via 10.0.2.2 dev eth0"
+#    dc1db.vm.provision "shell",
+#      inline: "ip route del default via 10.0.2.2 dev eth0"
   end
 
 
@@ -448,5 +448,23 @@ Vagrant.configure(2) do |config|
     dc2web.vm.provision "shell",
       inline: "ip route del default via 10.0.2.2 dev eth0"
  end
+
+  config.vm.define "dc2db" do |dc2db|
+  config.vm.box = "centos/7"
+  config.vm.box_version = "1905.1"
+  config.vm.base_mac = "DEADBEAF0030"
+    dc2db.vm.network "private_network", ip: "10.2.1.5", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "sw5"
+    dc2db.vm.hostname = "dc2db"
+    dc2db.vm.provider :virtualbox do |vb|
+      vb.name = "DC2-DB"
+      vb.memory = 256
+    end
+    dc2db.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/database.yml"
+      ansible.become = "true"
+    end
+#    dc2db.vm.provision "shell",
+#      inline: "ip route del default via 10.0.2.2 dev eth0"
+  end
 
 end
