@@ -34,5 +34,6 @@ Mask:
 {4:<8} {5:<8} {6:<8} {7:<8}
 {4:08b} {5:08b} {6:08b} {7:08b}
 '''
-
-print(template.format(int(network[0]), int(network[1]), int(network[2]), int(network[3]), mask_dec[0], mask_dec[1], mask_dec[2], mask_dec[3], '/' + mask))
+a, b, c, d = network
+e, f, g, h = mask_dec
+print(template.format(int(a), int(b), int(c), int(d), e, f, g, h, '/' + mask))
