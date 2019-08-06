@@ -58,6 +58,6 @@ trunk_template = [
 
 mode = input('Введите режим работы интерфейса (access/trunk): ')
 port_type = input('Введите тип и номер интерфейса: ')
-vlans = input('Введите номер влан(ов): ').replace(' ', '').split(',')
-
-print('interface {}'.format(port_type))
+vlans = input('Введите номер влан(ов): ')
+templates = {'access': access_template, 'trunk': trunk_template}
+print('interface {}'.format(port_type), '\n' + '\n'.join(templates[mode]).format(vlans))
