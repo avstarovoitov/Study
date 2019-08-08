@@ -14,3 +14,14 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+ipaddr = input('Введите IP-адрес в формате 10.0.1.1: ')
+if 1 <= int(ipaddr.split('.')[0]) <= 223:
+    print('unicast')
+elif 224 <= int(ipaddr.split('.')[0]) <= 239:
+    print('multicast')
+elif ipaddr == '255.255.255.255':
+    print('local broadcast')
+elif ipaddr == '0.0.0.0':
+    print('unassigned')
+else:
+    print('unused')
