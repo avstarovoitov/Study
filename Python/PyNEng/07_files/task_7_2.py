@@ -12,3 +12,14 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+
+###
+
+from sys import argv
+
+file_name = argv[1]
+
+with open(file_name, 'r') as config:
+    for line in config.readlines():
+        if not line.startswith('!'):
+            print(line.rstrip())
