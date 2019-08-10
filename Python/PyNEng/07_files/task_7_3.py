@@ -17,3 +17,14 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 '''
+
+###
+
+with open('CAM_table.txt', 'r') as cam:
+    for line in cam.readlines():
+        try:
+            if line[1].isdigit():
+                line = line.rstrip().split()
+                print(' {:<8} {:<16} {}'.format(line[0], line[1], line[3]))
+        except IndexError:
+            pass
