@@ -13,3 +13,15 @@
 '''
 
 ignore = ['duplex', 'alias', 'Current configuration']
+
+
+###
+
+from sys import argv
+
+file_name = argv[1]
+
+with open(file_name, 'r') as config:
+    for line in config.readlines():
+        if not line.startswith('!') and (ignore[0] not in line) and (ignore[1] not in line) and (ignore[2] not in line):
+            print(line.rstrip())
