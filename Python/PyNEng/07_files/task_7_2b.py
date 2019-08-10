@@ -14,3 +14,14 @@
 '''
 
 ignore = ['duplex', 'alias', 'Current configuration']
+
+###
+
+from sys import argv
+
+file_name = argv[1]
+
+with open(file_name, 'r') as src, open('config_sw1_cleared.txt', 'w') as dst:
+    for line in src.readlines():
+        if (ignore[0] not in line) and (ignore[1] not in line) and (ignore[2] not in line):
+            dst.write(line)
