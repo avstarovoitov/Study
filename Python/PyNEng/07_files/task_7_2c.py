@@ -17,3 +17,15 @@
 '''
 
 ignore = ['duplex', 'alias', 'Current configuration']
+
+###
+
+from sys import argv
+
+file_name_src = argv[1]
+file_name_dst = argv[2]
+
+with open(file_name_src, 'r') as src, open(file_name_dst, 'w') as dst:
+    for line in src.readlines():
+        if (ignore[0] not in line) and (ignore[1] not in line) and (ignore[2] not in line):
+            dst.write(line)
