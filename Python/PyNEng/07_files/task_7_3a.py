@@ -22,3 +22,21 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 '''
+
+### def not allowed by rule ^
+
+def clip(string):
+    return int(string[1:5])
+lines = []
+with open('CAM_table.txt', 'r') as cam:
+    for line in cam.readlines():
+        try:
+            if line[1].isdigit():
+                lines.append(line)
+        except IndexError:
+            pass
+lines = sorted(lines, key = clip)
+for line in lines:
+    line = line.rstrip().split()
+    print(' {:<8} {:<16} {}'.format(line[0], line[1], line[3]))
+
