@@ -54,7 +54,6 @@ access_config = {
     'FastEthernet0/16': 17
 }
 
-
 def generate_access_config(intf_vlan_mapping, access_template):
     '''
     intf_vlan_mapping - словарь с соответствием интерфейс-VLAN такого вида:
