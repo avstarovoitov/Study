@@ -33,13 +33,10 @@ def get_int_vlan_map (config_filename):
         for line in config:
             if line.startswith('interface'):
                 interface = line.split()[-1]
-            try:
-                if 'switchport access vlan' in line:
-                    access_vlan_map.update({interface: int(line.split()[-1])})
-                elif 'switchport trunk allowed' in line:
-                    trunk_vlan_map.update({interface: [int(vlan) for vlan in line.split()[-1].split(',')]})
-            except ValueError:
-                pass
+            if 'switchport access vlan' in line:
+                access_vlan_map.update({interface: int(line.split()[-1])})
+            elif 'switchport trunk allowed' in line:
+                trunk_vlan_map.update({interface: [int(vlan) for vlan in line.split()[-1].split(',')]})
     return access_vlan_map, trunk_vlan_map
 
 print(get_int_vlan_map (config_filename))
