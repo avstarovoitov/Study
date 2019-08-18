@@ -25,18 +25,17 @@
 
 ### def not allowed by rule ^
 
-def clip(string):
+def cut_line(string):
     return int(string[1:5])
 lines = []
-with open('CAM_table.txt', 'r') as cam:
-    for line in cam.readlines():
+with open('CAM_table.txt') as cam:
+    for line in cam:
         try:
             if line[1].isdigit():
                 lines.append(line)
         except IndexError:
             pass
-lines = sorted(lines, key = clip)
+lines = sorted(lines, key = cut_line)
 for line in lines:
     line = line.rstrip().split()
     print(' {:<8} {:<16} {}'.format(line[0], line[1], line[3]))
-
