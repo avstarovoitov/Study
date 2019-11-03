@@ -58,6 +58,15 @@
     name: ['kernel-ml-devel', 'kernel-ml-headers', 'kernel-ml-tools', 'perf']
     enablerepo: 'elrepo-kernel'
 
+- name: swap kernel version in grub
+  replace:
+    path: /etc/default/grub
+    regexp: 'GRUB_DEFAULT=saved'
+    replace: 'GRUB_DEFAULT=0'
+
+- name: reconfigure grub
+  shell: 'grub2-mkconfig -o /boot/grub2/grub.cfg'
+
 - name: install libyang-0.16.111
   yum:
     name: 'https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-10/CentOS-7-x86_64-Packages/libyang-0.16.111-0.x86_64.rpm'
