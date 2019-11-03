@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.define "router" do |box|
+    box.vm.hostname = "router"
+    box.vm.provider :virtualbox do |vb|
+      vb.name = "router"
+      vb.memory = 1024
+    end
+  end
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "provisioning/frr.yml"
+    ansible.become = "true"
+  end
+end

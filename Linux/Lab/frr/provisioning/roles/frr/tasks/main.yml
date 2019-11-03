@@ -1,0 +1,75 @@
+---
+# tasks file for frr
+
+- name: Put SELinux in permissive mode, logging actions that would be blocked.
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Enabling ipv4 forwarding
+  sysctl:
+    name: net.ipv4.conf.all.forwarding
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Enabling ipv6 forwarding
+  sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: upgrade all packages, excluding kernel
+  yum:
+    name: '*'
+    state: latest
+    exclude: kernel*
+
+- name: install tools
+  yum:
+    name: ['vim', 'nmap', 'telnet', 'tcpdump', 'wget']
+    state: latest
+
+- name: add pgpkey for elrepo
+  rpm_key:
+    state: present
+    key: 'https://www.elrepo.org/RPM-GPG-KEY-elrepo.org'
+
+- name: Add repository elrepo
+  yum:
+    name: 'https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm'
+    state: present
+
+- name: install kernel
+  yum:
+    name: kernel-ml
+    enablerepo: 'elrepo-kernel'
+
+- name: remove old kernel tools
+  yum:
+    name: kernel-tools-libs
+    state: absent
+
+- name: install kernel tools
+  yum:
+    name: ['kernel-ml-devel', 'kernel-ml-headers', 'kernel-ml-tools', 'perf']
+    enablerepo: 'elrepo-kernel'
+
+- name: install libyang-0.16.111
+  yum:
+    name: 'https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-10/CentOS-7-x86_64-Packages/libyang-0.16.111-0.x86_64.rpm'
+    state: present
+
+- name: install FRR-7.2-01
+  yum:
+    name: 'https://github.com/FRRouting/frr/releases/download/frr-7.2/frr-7.2-01.el7.centos.x86_64.rpm'
+    state: present
+
+- name: enable FRR service
+  systemd:
+    name: frr
+    state: started
+    enabled: yes

@@ -1,0 +1,5 @@
+---
+# handlers file for frr
+
+- name: elrepo
+  shell: 'rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org'
