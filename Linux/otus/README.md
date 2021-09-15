@@ -1,1 +1,1 @@
-# Homework for Linux course by OTUS
+# Homework for Linux course by OTUS.
